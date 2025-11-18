@@ -26,6 +26,7 @@ format:
 }
 </style>
 ```
+
 **Presenting authors**
 
 Daniel Kim$^{1,3}$, Lijia Yu$^{1,2}$, Andrew Zhang$^{1,5}$, Jean Yang$^{1,2,4}$.
@@ -473,7 +474,7 @@ First, we take a quick look at the structure of the SingleCell Experiment object
 
 ```{r load, warning=FALSE, error=FALSE, message=FALSE}
 # Load data
-load("../../data/breastCancer.RData")
+load("../data/breastCancer.RData")
 data_sce = IMC
 
 # Structure of our data
@@ -705,7 +706,7 @@ Here we plot the correlation of different markers for a subset of samples. This 
 <br>
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-coexp_df <- readRDS("../../data/coexp_df.rds")
+coexp_df <- readRDS("../data/coexp_df.rds")
 marker_list <- c("CD20", "CD3", "CD68", "vWF_CD31", "Vimentin", "HER2")
  
 # Proportion heatmaps
@@ -838,7 +839,7 @@ ggplot(one_sample, aes(x = Location_Center_X, y = Location_Center_Y, colour = de
 
 <br>
 
-::: panel-tabset
+:::: panel-tabset
 ### Spatial regions
 
 Background: One of the most common questions or analyses in spatial data is spatial domain detection. “Spatial domains” are regions within a tissue where cells share similar gene expression profiles and are physically clustered together. Here, we will use the terminology “spatial domain” and “regions” interchangeably. Most common analytical strategies involve spatial clustering, where different methods use different levels of information, such as gene expression data only, cell type information, and spatial coordinates.
@@ -909,7 +910,7 @@ draw_selected_region_boxplot(data_sce,
                              select_region = "region_5")
 
 ```
-:::
+::::
 
 # Part 4: Feature engineering with scFeatures
 
@@ -939,7 +940,7 @@ Here, we can consider regional information and the following code allows us to c
 
 There are a total of 13 different types of features (feature_types) that you can choose to generate. The argument type refers the type of input data we have. This is either `scrna` (single-cell RNA-sequencing data), `spatial_p` (spatial proteomics data), or `spatial_t` (single-cell spatial data). In this section, we will ignore spatial information and generate non-spatial features, such as pseudobulking at the sample /cell type levels, overall expression, cell type proportions etc...
 
-::: panel-tabset
+:::: panel-tabset
 ### Generate features
 
 Suppose that we are interested in determining the proportion of cell-types within each region for each individual. It is necessary to specify `type = spatial_p` to reflect that we have spatial proteomics data and `feature_types = proportion_raw` to indicate we intend to calculate cell-type proportions for each of the region-specific cell-types. Suppose we are only interested in the molecular representation of `HR- CK7+` within individuals within region 5.
@@ -1037,12 +1038,12 @@ Assuming you have already generated a collection of molecular representation for
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 # Upload pre-generated RDS file
-scfeatures_result <- readRDS("../../data/scfeatures_result.RDS")
+scfeatures_result <- readRDS("../data/scfeatures_result.RDS")
 
 # What are the features and the dimensions of features matrices that we have generated?
 lapply(scfeatures_result, dim)
 ```
-:::
+::::
 
 ## 4.2 How can we represent spatial information and relationships for a given individual?
 
@@ -1139,7 +1140,7 @@ classifyr_result_IMC <- crossValidate(clinicalAndOmics, c("timeRFS", "eventRFS")
 ```
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-classifyr_result_IMC <- readRDS("../../data/classifyr_result_IMC.rds")
+classifyr_result_IMC <- readRDS("../data/classifyr_result_IMC.rds")
 ```
 
 Cox proportional hazards is a classical statistical method, as opposed to machine learning methods like Random survival forest. These machine learning methods can build remarkably complex relationships between features, however their running time can be much longer than Cox proportional hazards. We use feature selection to limit the number of features considered to at most 100 per metafeature and to save time, **you can just load the prepared RDS file.** We will compare the predictive performance between these methods.
@@ -1152,7 +1153,7 @@ survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
 ```
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-survForestCV <- readRDS("../../data/survForestCV.RDS")
+survForestCV <- readRDS("../data/survForestCV.RDS")
 ```
 
 ### Model performance (Optional)

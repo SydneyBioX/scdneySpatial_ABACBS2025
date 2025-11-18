@@ -796,7 +796,6 @@ ggarrange(log, norm, ncol=2)
 
 In the plot above, the normalised data appeas more bimodal. We can observe one clear CD31- peak at around 0.50, and a CD31+ peak at 1.00. Image-level batch effects also appear to have been mitigated, since most peaks occur at around the same CD31 intensity.
 
-
 ::: question
 *Discussion*
 
@@ -1019,6 +1018,7 @@ draw_region_clustering_result(data_sce ,
 ### Spatial regions detection across multiple individuals (Banksy)
 
 To perform spatial region detection across multiple individuals, we will use the `Banksy` package. The `Banksy` method identifies spatial regions by integrating both gene expression and spatial information. Below is the code to perform spatial region detection using `Banksy` and visualise the results.
+
 ```{r,fig.height=4, fig.width= 6, warning=FALSE, error=FALSE, message=FALSE}
 library(Banksy)
 library(SpatialExperiment)
@@ -1069,6 +1069,7 @@ hatchingPlot(
   spatialCoords = c("Location_Center_X", "Location_Center_Y")
 )
 ```
+
 We can also visualise the spatial region detection results across multiple individuals side by side for comparison. Below is an example of visualising two individuals, `MB-0002` and `MB-0064`. Notice the different cell type compositions in the different regions between the two individuals.
 
 ```{r,fig.height=5, fig.width= 12, warning=FALSE, error=FALSE, message=FALSE}
@@ -1087,8 +1088,6 @@ plot_list <- lapply(samples_to_plot, function(id) {
 plot_list <- plot_list[!vapply(plot_list, is.null, logical(1))]
 cowplot::plot_grid(plotlist = plot_list, ncol = 2)
 ```
-
-
 
 ### Across individuals (Optional)
 
