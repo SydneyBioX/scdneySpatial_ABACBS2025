@@ -9,8 +9,6 @@ Authors@R:
       person(given = "Ellis", family = "Patrick",role = c("aut", "cre"),email = "ellis.patrick@sydney.edu.au"),
       person(given = "Jean", family = "Yang",role = c("aut", "cre"),email = "jean.yang@sydney.edu.au"),
       person(given = "Sydney Data Science Centre",role = c("aut"), email = "data-science.admin@sydney.edu.au"))
-      )
-
 Description: Unlocking single cell spatial omics analyses with SCDNEY
 License: MIT + file LICENSE
 Encoding: UTF-8
