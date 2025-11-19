@@ -1772,23 +1772,26 @@ other available models in `ClassifyR`.
   `classifyr_result_IMC.rds`** and we will focus on the interpretation
   in this workshop.
 
-      # We use the following variables:
-      # timeRFS: "Time to Recurrence-Free Survival." It is the time period until recurrence occurs.
-      # eventRFS: "Event in Recurrence-Free Survival."It indicates whether the event has occurred.
-      # Breast.Tumour.Laterality: Laterality of tumors, eg, whether the tumor is located in left or right.
-      # ER.Status: Whether the tumor is ER positive or ER negative.
-      # Inferred.Menopausal.State: of the patient.
-      # Grade: of the tumor.
-      # Size: of the tumor.
+  Code
+  ``` r
+  # We use the following variables:     
+  # timeRFS: "Time to Recurrence-Free Survival." It is the time period until recurrence occurs.    
+  # eventRFS: "Event in Recurrence-Free Survival."It indicates whether the event has occurred.    
+  # Breast.Tumour.Laterality: Laterality of tumors, eg, whether the tumor is located in left or right.     
+  # ER.Status: Whether the tumor is ER positive or ER negative.    
+  # Inferred.Menopausal.State: of the patient.    
+  # Grade: of the tumor.   
+  # Size: of the tumor.   
 
-      usefulFeatures <- c("Breast.Tumour.Laterality", "ER.Status", "Inferred.Menopausal.State", "Grade", "Size")
-      nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result, function(metaFeature) 1:5))
-      clinicalAndOmics <- append(list(clinical = clinical), scfeatures_result)
+  usefulFeatures <- c("Breast.Tumour.Laterality", "ER.Status", "Inferred.Menopausal.State", "Grade", "Size")
+  nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result, function(metaFeature) 1:5))
+  clinicalAndOmics <- append(list(clinical = clinical), scfeatures_result)
 
-      ### generate classfyr result
-      classifyr_result_IMC <- crossValidate(clinicalAndOmics, c("timeRFS", "eventRFS"),
-                          extraParams = list(prepare = list(useFeatures = list(clinical = usefulFeatures))),
-                          nFeatures = nFeatures, nFolds = 5, nRepeats = 5, nCores = 5)
+  ### generate classfyr result 
+  classifyr_result_IMC <- crossValidate(clinicalAndOmics, c("timeRFS", "eventRFS"),
+                      extraParams = list(prepare = list(useFeatures = list(clinical = usefulFeatures))),
+                      nFeatures = nFeatures, nFolds = 5, nRepeats = 5, nCores = 5)
+  ```
 
   Code
   ``` r
@@ -1806,10 +1809,13 @@ other available models in `ClassifyR`.
   **you can just load the prepared RDS file.** We will compare the
   predictive performance between these methods.
 
-      nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result[2:length(scfeatures_result)], function(metaFeature) min(100, ncol(metaFeature))))
-      survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
-                      classifier = "randomForest",
-                      nFolds = 5, nRepeats = 5, nCores = 5)
+  Code
+  ``` r
+  nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result[2:length(scfeatures_result)], function(metaFeature) min(100, ncol(metaFeature))))
+  survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
+                  classifier = "randomForest",
+                  nFolds = 5, nRepeats = 5, nCores = 5)
+  ```
 
   Code
   ``` r
@@ -1839,7 +1845,7 @@ performancePlot(multiresults,
                 tilt
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-39-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-41-1.png)
 
 Note how the resultant plot is a `ggplot2` object and can be further
 modified. The same code could be used for a categorical classifier
@@ -1855,7 +1861,7 @@ selectionPlot(multiresults,
                 orderingList = list("Assay Name" = ordering)) + tilt
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-40-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-42-1.png)
 
 Code
 
@@ -1877,7 +1883,7 @@ library(grid)
 samplesMetricMap(classifyr_result_IMC)
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-41-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-43-1.png)
 
     TableGrob (2 x 1) "arrange": 2 grobs
       z     cells    name                 grob
@@ -1921,7 +1927,7 @@ b <- ggplot( one_sample, aes(x = Location_Center_X , y = Location_Center_Y, colo
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-42-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-44-1.png)
 
 - Cell type interaction composition:
 
@@ -1954,7 +1960,7 @@ b <- ggplot(to_plot, aes(x =  `celltype interaction composition`  ,  y = value, 
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-43-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-45-1.png)
 
 - Moran’s I:
 
@@ -1981,7 +1987,7 @@ b <- ggplot(low_meta, aes(x = Location_Center_X , y = Location_Center_Y, colour 
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-44-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-46-1.png)
 
 - Nearest Neighbor Correlation:
 
@@ -2037,7 +2043,7 @@ p2 <- plot_nncorrelation("MB-0258",  "HER2")
 ggarrange(plotlist = list(p1, p2))
 ```
 
-![](NUS_workshop_v2_files/figure-html/unnamed-chunk-45-1.png)
+![](NUS_workshop_v2_files/figure-html/unnamed-chunk-47-1.png)
 
 ### SessionInfo
 
