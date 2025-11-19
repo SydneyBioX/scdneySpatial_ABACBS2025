@@ -27,6 +27,8 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - uses: r-lib/actions/setup-quarto@v2
+
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
@@ -35,6 +37,8 @@ jobs:
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
+          cache: true
+          cache-version: 1     # bump this if cache ever gets corrupted
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
