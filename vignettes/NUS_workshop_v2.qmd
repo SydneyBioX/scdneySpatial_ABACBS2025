@@ -872,7 +872,7 @@ cell_counts <- IMC@colData |>  as.data.frame() |>
 
 
 mean_coexp_per_sample <- coexp_df %>%
-  select(-cell_id, -cell_type) %>%  # remove columns not related to prob values
+  dplyr::select(-cell_id, -cell_type) %>%  # remove columns not related to prob values
   group_by(metabricId) %>%
   summarise(mean_coexp_prob = mean(c_across(where(is.numeric)), na.rm = TRUE)) %>%
   ungroup()

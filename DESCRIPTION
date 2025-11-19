@@ -27,7 +27,6 @@ Suggests:
     ggplot2,
     scFeatures,
     ClassifyR,
-    lisaClust,
     ggthemes,
     pheatmap,
     spicyR,
@@ -55,5 +54,6 @@ Suggests:
     pkgdown,
     quarto
 Remotes:
-    SydneyBioX/scFeatures
+    SydneyBioX/scFeatures,
+    SydneyBioX/lisaClust
 URL: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/
