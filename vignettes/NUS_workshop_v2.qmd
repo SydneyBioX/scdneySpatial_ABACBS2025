@@ -1081,6 +1081,8 @@ banksy_ouput_spe_joint <- readRDS(system.file("extdata",
                                               "banksy_ouput_spe_joint.rds",
                                               package = "scdneySpatialABACBS2025"))
 
+colData(banksy_ouput_spe_joint)[,c("Location_Center_X", "Location_Center_Y")] <- NULL
+
 hatchingPlot(
   banksy_ouput_spe_joint,
   region = "banksy_region",
