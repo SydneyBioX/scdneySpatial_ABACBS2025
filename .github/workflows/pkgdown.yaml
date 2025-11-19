@@ -31,7 +31,6 @@ jobs:
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: "latest"   # or pin a version, e.g. "1.5.57"
           tinytex: false      # or true if you need LaTeX/PDF
 
       - uses: r-lib/actions/setup-r@v2
