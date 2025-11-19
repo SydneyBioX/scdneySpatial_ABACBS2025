@@ -33,6 +33,7 @@ Suggests:
     dplyr,
     limma,
     plotly,
+    lisaClust,
     scattermore,
     tidyr,
     survival,
@@ -54,6 +55,5 @@ Suggests:
     pkgdown,
     quarto
 Remotes:
-    SydneyBioX/scFeatures,
-    SydneyBioX/lisaClust
+    SydneyBioX/scFeatures
 URL: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/
