@@ -1,30 +1,29 @@
-Package: scdneySpatial_ABACBS2025
-Title:  Unlocking single cell spatial omics analyses with scdney
+Package: scdneySpatialABACBS2025
+Title: Unlocking single cell spatial omics analyses with scdney
 Version: 0.1.0
 Authors@R: 
-  c(person(given = "Farhan", family = "Ameen", role = c("aut", "cre"), email = "farhan.ameen@sydney.edu.au"),
-      person(given = "Daniel", family = "Kim",role = c("aut", "cre"), email = "daniel.kim2@sydney.edu.au"),
-      person(given = "Shreya", family = "Rao",role = c("aut", "cre"), email = "shreya.rao@sydney.edu.au"),
+  c(person(given = "Farhan", family = "Ameen", role = c("aut"), email = "farhan.ameen@sydney.edu.au"),
+      person(given = "Daniel", family = "Kim",role = c("aut" ), email = "daniel.kim2@sydney.edu.au"),
+      person(given = "Shreya", family = "Rao",role = c("aut"), email = "shreya.rao@sydney.edu.au"),
       person(given = "Lijia", family = "Yu",role = c("aut", "cre"), email = "lijia.yu@sydney.edu.au"),
-      person(given = "Ellis", family = "Patrick",role = c("aut", "cre"),email = "ellis.patrick@sydney.edu.au"),
-      person(given = "Jean", family = "Yang",role = c("aut", "cre"),email = "jean.yang@sydney.edu.au"),
+      person(given = "Ellis", family = "Patrick",role = c("aut"),email = "ellis.patrick@sydney.edu.au"),
+      person(given = "Jean", family = "Yang",role = c("aut"),email = "jean.yang@sydney.edu.au"),
       person(given = "Sydney Data Science Centre",role = c("aut"), email = "data-science.admin@sydney.edu.au"))
-Description: Unlocking single cell spatial omics analyses with SCDNEY
-License: MIT + file LICENSE
+Description:  Tools, workflows, and example data for spatial image analysis used in the ABACBS 2025 workshop, "Unlocking single cell spatial omics analyses with SCDNEY".
+License: CC BY-NC-ND 4.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Depends: 
-  Biobase,
   R (>= 4.1)
-Imports: 
+Suggests:
   Seurat,
   scFeatures,
+  Biobase,
   ggplot2,
   ggthemes,
-  ClassifyR
-Suggests: 
+  ClassifyR,
   knitr,
   rmarkdown,
   pkgdown
