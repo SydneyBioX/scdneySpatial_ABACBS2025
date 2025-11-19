@@ -27,7 +27,8 @@ Suggests:
     scFeatures,
     knitr,
     rmarkdown,
-    pkgdown
+    pkgdown,
+    quarto
 Remotes:
     SydneyBioX/scFeatures
 URL: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/
