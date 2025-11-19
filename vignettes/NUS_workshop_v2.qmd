@@ -421,7 +421,8 @@ plot_pairwise_heatmaps_per_sample <- function(coexp_df, marker_list, prob_cutoff
 
 The emergence of high-resolution spatial omics technologies has revolutionized our ability to map cellular ecosystems in situ. This workshop explores approaches in multi-sample spatial data analysis. We cover end-to-end workflow considerations—from experimental design and QC to spatial feature interpretation—with case studies in disease prediction.
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ## Our dataset
 
 A subset of the widely-known METABRIC breast cancer cohort has recently been analyzed using imaging mass cytometry: [Imaging Mass Cytometry and Multiplatform Genomics Define the Phenogenomic Landscape of Breast Cancer](https://www.nature.com/articles/s43018-020-0026-6). Patient clinical data was sourced from the Supplementary Table 5 of [Dynamics of Breast-cancer Relapse Reveal Late-recurring ER-positive Genomic Subgroups](https://www.nature.com/articles/s41586-019-1007-8).
@@ -458,7 +459,8 @@ To begin, we will start with loading an example image in R. It is not neccessary
 
 system.file("extdata", "MB0002_1_345_fullstack.tiff", package = "scdneySpatial_ABACBS2025")
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ### DNA staining image
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE, fig.width=10, fig.height=4}
@@ -549,9 +551,10 @@ At the start of any analysis pipeline, it is often good to explore the data to g
 3.  Given our question of interest, what variable would be our outcome variable?
 :::
 
-<br>
+<br/>
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ### SCE object
 
 First, we take a quick look at the structure of the SingleCell Experiment object.
@@ -602,7 +605,8 @@ colnames(colData(data_sce))
 
 Now that we have a basic idea of what our data looks like, we can look at it in more detail. While initial data exploration reveals fundamental patterns, deeper examination is very helpful. As it serves two critical purposes: first, to detect anomalies or biases requiring remediation, and second, to inform our choice of analytical methods tailored to the biological questions at hand.
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ### Missing values
 
 Examining the proportion of missing values in a dataset is crucial for ensuring the accuracy and validity of data analysis. Missing values can significantly impact the reliability of statistical results, potentially leading to biased conclusions and reduced statistical power. Here, we plot the proportion of missing values for each of our clinical variables.
@@ -767,9 +771,10 @@ We assess whether the marker intensities require transformation or normalisation
 
 By applying transformation and normalisation, we aim to stabilise variance and bring the data onto a more comparable scale across images.
 
-<br>
+<br/>
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ```{r, results='asis', warning=FALSE, error=FALSE, message=FALSE}
 for (i in seq_along(plots)) {
   cat("#### ",names(plots)[[i]],"\n")
@@ -844,7 +849,8 @@ marker_list <- c("CD20", "CD3", "CD68", "vWF_CD31", "Vimentin", "HER2")
 heatmaps_prop <- plot_pairwise_heatmaps_per_sample(coexp_df, marker_list, stat = "proportion")
 ```
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ```{r, results='asis'}
 for (i in seq_along(heatmaps_prop)) {
   cat("#### ",names(heatmaps_prop)[[i]],"\n")
@@ -985,9 +991,10 @@ ggplot(one_sample, aes(x = Location_Center_X, y = Location_Center_Y, colour = de
 2.  How might we try to capture these spatial relationships?
 :::
 
-<br>
+<br/>
 
-:::: panel-tabset
+:::: {.panel-tabset}
+
 ### Spatial regions
 
 Background: One of the most common questions or analyses in spatial data is spatial domain detection. “Spatial domains” are regions within a tissue where cells share similar gene expression profiles and are physically clustered together. Here, we will use the terminology “spatial domain” and “regions” interchangeably. Most common analytical strategies involve spatial clustering, where different methods use different levels of information, such as gene expression data only, cell type information, and spatial coordinates.
@@ -1166,7 +1173,8 @@ Here, we can consider regional information and the following code allows us to c
 
 There are a total of 13 different types of features (feature_types) that you can choose to generate. The argument type refers the type of input data we have. This is either `scrna` (single-cell RNA-sequencing data), `spatial_p` (spatial proteomics data), or `spatial_t` (single-cell spatial data). In this section, we will ignore spatial information and generate non-spatial features, such as pseudobulking at the sample /cell type levels, overall expression, cell type proportions etc...
 
-:::: panel-tabset
+:::: {.panel-tabset}
+
 ### Generate features
 
 Suppose that we are interested in determining the proportion of cell-types within each region for each individual. It is necessary to specify `type = spatial_p` to reflect that we have spatial proteomics data and `feature_types = proportion_raw` to indicate we intend to calculate cell-type proportions for each of the region-specific cell-types. Suppose we are only interested in the molecular representation of `HR- CK7+` within individuals within region 5.
@@ -1335,9 +1343,10 @@ We will now look at the spatial statistic output by `scFeatures` and qualitively
 2.  Are there any differences in the distribution of spatial statistics between the "good" and "bad" prognosis groups?
 :::
 
-<br>
+<br/>
 
-::: panel-tabset
+::: {.panel-tabset}
+
 ### Nearest neighbour correlation
 
 This metric measures the correlation of proteins/genes between a cell and its nearest neighbour cell.
@@ -1452,9 +1461,9 @@ Recurrence risk estimation is a fundamental concern in medical research, particu
 2.  If not, for which individuals is it important in predicting survival?
 :::
 
-<br>
+<br/>
 
-::: panel-tabset
+::: {.panel-tabset}
 
 ### Building a survival model (Optional)
 
