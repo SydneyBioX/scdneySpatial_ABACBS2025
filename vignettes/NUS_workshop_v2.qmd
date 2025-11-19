@@ -1455,6 +1455,7 @@ Recurrence risk estimation is a fundamental concern in medical research, particu
 <br>
 
 ::: panel-tabset
+
 ### Building a survival model (Optional)
 
 Recall in the previous section that we have stored the 13 matrices of different feature types in a list. Instead of manually retrieving each matrix from the list to build separate models, classifyR can directly take a list of matrices as an input and run a repeated cross-validation model on each matrix individually. Below, we run 5 repeats of 5-fold cross-validation. A high score indicates prognosis of a worse outcome than a lower risk score. Although we have provided the code below, to save time, **just load the prepared RDS file `classifyr_result_IMC.rds`** and we will focus on the interpretation in this workshop.
@@ -1538,6 +1539,7 @@ Does each individual require a different collection of features? Using `samplesM
 library(grid)
 samplesMetricMap(classifyr_result_IMC)
 ```
+
 :::
 
 # Appendix
