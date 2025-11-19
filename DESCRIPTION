@@ -17,14 +17,17 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Depends: 
   R (>= 4.1)
+Imports: 
+    Seurat,
+    Biobase,
+    ggplot2,
+    ggthemes,
+    ClassifyR
 Suggests:
-  Seurat,
-  scFeatures,
-  Biobase,
-  ggplot2,
-  ggthemes,
-  ClassifyR,
-  knitr,
-  rmarkdown,
-  pkgdown
+    scFeatures,
+    knitr,
+    rmarkdown,
+    pkgdown
+Remotes:
+    SydneyBioX/scFeatures
 URL: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/
