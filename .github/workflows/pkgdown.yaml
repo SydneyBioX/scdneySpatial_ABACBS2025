@@ -52,7 +52,6 @@ jobs:
 
       - name: Build site (verbose)
          run: |
-           options(pkgdown.run_quiet = FALSE)
            pkgdown::build_site_github_pages(
            new_process = FALSE,
            install = FALSE)
