@@ -1459,7 +1459,7 @@ Recurrence risk estimation is a fundamental concern in medical research, particu
 
 Recall in the previous section that we have stored the 13 matrices of different feature types in a list. Instead of manually retrieving each matrix from the list to build separate models, classifyR can directly take a list of matrices as an input and run a repeated cross-validation model on each matrix individually. Below, we run 5 repeats of 5-fold cross-validation. A high score indicates prognosis of a worse outcome than a lower risk score. Although we have provided the code below, to save time, **just load the prepared RDS file `classifyr_result_IMC.rds`** and we will focus on the interpretation in this workshop.
 
-```         
+```{r, warning=FALSE, error=FALSE, message=FALSE}         
 # We use the following variables:     
 # timeRFS: "Time to Recurrence-Free Survival." It is the time period until recurrence occurs.    
 # eventRFS: "Event in Recurrence-Free Survival."It indicates whether the event has occurred.    
@@ -1488,7 +1488,7 @@ classifyr_result_IMC <- readRDS(system.file("extdata",
 
 Cox proportional hazards is a classical statistical method, as opposed to machine learning methods like Random survival forest. These machine learning methods can build remarkably complex relationships between features, however their running time can be much longer than Cox proportional hazards. We use feature selection to limit the number of features considered to at most 100 per metafeature and to save time, **you can just load the prepared RDS file.** We will compare the predictive performance between these methods.
 
-```         
+```{r, warning=FALSE, error=FALSE, message=FALSE}         
 nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result[2:length(scfeatures_result)], function(metaFeature) min(100, ncol(metaFeature))))
 survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
                 classifier = "randomForest",
