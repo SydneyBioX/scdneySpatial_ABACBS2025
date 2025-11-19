@@ -44,6 +44,12 @@ jobs:
           cache: true
           cache-version: 1     # bump this if cache ever gets corrupted
 
+      - name: Debug Quarto workshop render
+        run: |
+          quarto::quarto_render("vignettes/NUS_workshop_v2.qmd", quiet = FALSE)
+        shell: Rscript {0}
+
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
