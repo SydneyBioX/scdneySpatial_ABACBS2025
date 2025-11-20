@@ -691,7 +691,7 @@ plotUMAP(data_sce, colour_by = "metabricId") + theme(legend.position = "none") +
 -   Given our question of interest and the characteristics of our data, are there any particular analytic techniques that would be appropriate? Are there any that would not be appropriate?
 :::
 
-<br>
+<br/>
 
 # Part 2: Quality control
 
@@ -786,7 +786,7 @@ for (i in seq_along(plots)) {
 
 ### Normalisation of marker expression
 
-::: callout-tip
+:::  {.callout-tip}
 **What we're looking for**
 
 1.  Do the CD31+ and CD31- peaks clearly separate out in the density plot? To ensure that downstream analysis goes smoothly, we want our cell type specific markers to show 2 distinct peaks representing our CD31+ and CD31- cells. If we see 3 or more peaks where we don't expect, this might be an indicator that further normalisation is required.
