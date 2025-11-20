@@ -447,10 +447,12 @@ A subset of the widely-known METABRIC breast cancer cohort has recently been ana
 -   Explore various strategies for disease outcome prognosis using spatial omics data.
 :::
 
-::: question
+::: {.question}
+
 **Our question of interest**
 
 We want to know if the risk of recurrence in the METABRIC breast cancer cohort can be accurately estimated to inform how aggressively they need to be treated.
+
 :::
 
 # Part 0: Loading an example image in R
@@ -543,7 +545,8 @@ combine = plotPixels(
 
 At the start of any analysis pipeline, it is often good to explore the data to get a sense of the structure and its complexity. Let's explore the data to answer the questions below:
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  How many features and observations are there in the data and what do the features represent?
@@ -684,11 +687,13 @@ plotUMAP(data_sce, colour_by = "metabricId") + theme(legend.position = "none") +
 ```
 :::
 
-::: question
+::: {.question}
+
 *Discussion*
 
 -   Are there any anomalies or biases that might need to be corrected to ensure our analysis is robust?
 -   Given our question of interest and the characteristics of our data, are there any particular analytic techniques that would be appropriate? Are there any that would not be appropriate?
+
 :::
 
 <br/>
@@ -755,12 +760,14 @@ plots <- plot_marker_densities(imc.spe, sample_id_col = "metabricId",
 
 Here, we want to assess the quality of the markers: it is desirable to see at least two peaks, which would indicate the existence of cell type specific markers in our data.
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  Can we see any cell type specific markers, which are they?
 2.  Are there any non-cell type specific markers?
 3.  What can you notice about the distribution of markers across images?
+
 :::
 
 We assess whether the marker intensities require transformation or normalisation. This step is important for two main reasons:
@@ -816,27 +823,31 @@ ggarrange(log, norm, ncol=2)
 
 In the plot above, the normalised data appeas more bimodal. We can observe one clear CD31- peak at around 0.50, and a CD31+ peak at 1.00. Image-level batch effects also appear to have been mitigated, since most peaks occur at around the same CD31 intensity.
 
-::: question
+::: {.question}
+
 *Discussion*
 
 -   Do we have a sufficient amount of cell type specific markers?
 -   Is the panel of genes sufficient for our study?
+
 :::
 
-<br>
+<br/>
 
 ## 2.2: QC of individual samples
 
 Here we plot the correlation of different markers for a subset of samples. This helps us determine whether a sample has low/high contamination of markers.
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  Which pairs of markers do we expect to be correlated/not correlated.
 2.  Is there any evidence of marker contamination for a given sample?
+
 :::
 
-<br>
+<br/>
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 coexp_df <- readRDS(system.file("extdata", "coexp_df.rds",
@@ -862,14 +873,16 @@ for (i in seq_along(heatmaps_prop)) {
 
 ## 2.3: QC of study as a whole
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  Are there any samples you would like to remove from the data?
 2.  Which samples would you like to keep?
+
 :::
 
-<br>
+<br/>
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 cell_counts <- IMC@colData |>  as.data.frame() |>
@@ -984,11 +997,13 @@ ggplot(one_sample, aes(x = Location_Center_X, y = Location_Center_Y, colour = de
   ggtitle("Original slide")
 ```
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  What kinds of spatial information might be of interest given the question we'd like to answer?
 2.  How might we try to capture these spatial relationships?
+
 :::
 
 <br/>
@@ -1032,13 +1047,15 @@ draw_region_clustering_result(data_sce ,
                               selected_sample =  "MB-0002" )
 ```
 
-::: question
+::: {.question}
+
 *Discussion*
 
 -   If we'd like to examine multiple individuals, is there a better visualise this information?
+
 :::
 
-<br>
+<br/>
 
 ### Spatial regions detection across multiple individuals (Banksy)
 
@@ -1207,11 +1224,13 @@ scfeatures_result <- scFeatures(IMCmatrix,
 
 ### ROI
 
-::: question
+::: {.question}
+
 **Question**
 
 1.  Are there any regions that are associated with "good" and "poor" prognosis?
 2.  Is this the right way to visualise the results?
+
 :::
 
 <br>
@@ -1336,11 +1355,13 @@ lapply(scfeatures_result, dim)
 
 We will now look at the spatial statistic output by `scFeatures` and qualitively assess whether there is any association between between these statistics and the "good" and "bad" prognosis groups.
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  What kind of information would spatial statistics provide?
 2.  Are there any differences in the distribution of spatial statistics between the "good" and "bad" prognosis groups?
+
 :::
 
 <br/>
@@ -1454,11 +1475,13 @@ feature %>%
 
 Recurrence risk estimation is a fundamental concern in medical research, particularly in the context of patient survival analysis. In this section, we will estimate recurrence risk using the molecular representation of individuals generated from `scFeatures` to build a survival model. We will use classifyR to build the survival model. The patient outcome is time-to-event, so, by default, ClassifyR will use Cox proportional hazards ranking to choose a set of features and also Cox proportional hazards to predict risk scores. We will also demonstrate other available models in `ClassifyR`.
 
-::: question
+::: {.question}
+
 **Questions**
 
 1.  Are spatial features globally informative in predicting survival?
 2.  If not, for which individuals is it important in predicting survival?
+
 :::
 
 <br/>
@@ -1469,7 +1492,7 @@ Recurrence risk estimation is a fundamental concern in medical research, particu
 
 Recall in the previous section that we have stored the 13 matrices of different feature types in a list. Instead of manually retrieving each matrix from the list to build separate models, classifyR can directly take a list of matrices as an input and run a repeated cross-validation model on each matrix individually. Below, we run 5 repeats of 5-fold cross-validation. A high score indicates prognosis of a worse outcome than a lower risk score. Although we have provided the code below, to save time, **just load the prepared RDS file `classifyr_result_IMC.rds`** and we will focus on the interpretation in this workshop.
 
-```{r, eval=FALSE}         
+```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}       
 # We use the following variables:     
 # timeRFS: "Time to Recurrence-Free Survival." It is the time period until recurrence occurs.    
 # eventRFS: "Event in Recurrence-Free Survival."It indicates whether the event has occurred.    
@@ -1498,7 +1521,7 @@ classifyr_result_IMC <- readRDS(system.file("extdata",
 
 Cox proportional hazards is a classical statistical method, as opposed to machine learning methods like Random survival forest. These machine learning methods can build remarkably complex relationships between features, however their running time can be much longer than Cox proportional hazards. We use feature selection to limit the number of features considered to at most 100 per metafeature and to save time, **you can just load the prepared RDS file.** We will compare the predictive performance between these methods.
 
-```{r, eval=FALSE}         
+```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}        
 nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result[2:length(scfeatures_result)], function(metaFeature) min(100, ncol(metaFeature))))
 survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
                 classifier = "randomForest",
