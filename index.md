@@ -1,6 +1,6 @@
 # Unlocking single-cell and spatial analysis with scdney
 
-![](inst/images/banner.png)
+![scdneySpatialABACBS2025 banner](reference/figures/banner.png)
 
 ## Overview
 
