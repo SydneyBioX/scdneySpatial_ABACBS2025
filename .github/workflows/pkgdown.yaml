@@ -42,7 +42,7 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
           cache: true
-          cache-version: 1     # bump this if cache ever gets corrupted
+          cache-version: 2     # bump this if cache ever gets corrupted
 
       #  name: Debug Quarto workshop render
       #  run: |
