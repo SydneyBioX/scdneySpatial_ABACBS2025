@@ -49,6 +49,18 @@ jobs:
           quarto::quarto_render("vignettes/NUS_workshop_v2.qmd", quiet = FALSE)
         shell: Rscript {0}
 
+      - name: Build site (verbose)
+        run: |
+          pkgdown::build_site(
+            new_process = FALSE,
+            install = FALSE,
+            preview = FALSE,
+            devel = FALSE,
+            lazy = FALSE #,
+            # override = list()  # or your overrides
+            # quiet = FALSE is the default in newer pkgdown, but you can be explicit
+          )
+        shell: Rscript {0}
 
       - name: Build site (verbose)
         run: |
