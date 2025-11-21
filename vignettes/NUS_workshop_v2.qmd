@@ -24,6 +24,10 @@ format:
   color: black;
   border-radius: 10px;
 }
+.panel-tabset .tab-content,
+.panel-tabset .tab-pane {
+  text-align: left;
+}
 </style>
 ```
 
@@ -552,6 +556,7 @@ At the start of any analysis pipeline, it is often good to explore the data to g
 1.  How many features and observations are there in the data and what do the features represent?
 2.  What covariates are in our data?
 3.  Given our question of interest, what variable would be our outcome variable?
+
 :::
 
 <br/>
@@ -793,7 +798,7 @@ for (i in seq_along(plots)) {
 
 ### Normalisation of marker expression
 
-:::  {.callout-tip}
+::: callout-tip
 **What we're looking for**
 
 1.  Do the CD31+ and CD31- peaks clearly separate out in the density plot? To ensure that downstream analysis goes smoothly, we want our cell type specific markers to show 2 distinct peaks representing our CD31+ and CD31- cells. If we see 3 or more peaks where we don't expect, this might be an indicator that further normalisation is required.
@@ -961,7 +966,7 @@ pheatmap(avg_expr, scale = "column", main = "Average Marker Expression per Cell 
 -   How might be check whether these results make sense? What potential issues might we find?
 :::
 
-<br>
+<br/>
 
 # Part 3: Exploring spatial data
 
@@ -1037,7 +1042,7 @@ hatchingPlot(
   spatialCoords = c("Location_Center_X", "Location_Center_Y") ) 
 ```
 
-<br>
+<br/>
 
 We have written a small function `draw_region_clustering_result` to visualise the data separately in multiple graphs for the individual `MB-0002`.
 
@@ -1233,7 +1238,7 @@ scfeatures_result <- scFeatures(IMCmatrix,
 
 :::
 
-<br>
+<br/>
 
 ```{r, fig.height=6, fig.width=20, warning=FALSE, error=FALSE, message=FALSE}
 ## [A] The next few lines extract specific information from data_sce as input to scFeatures. 
@@ -1492,7 +1497,7 @@ Recurrence risk estimation is a fundamental concern in medical research, particu
 
 Recall in the previous section that we have stored the 13 matrices of different feature types in a list. Instead of manually retrieving each matrix from the list to build separate models, classifyR can directly take a list of matrices as an input and run a repeated cross-validation model on each matrix individually. Below, we run 5 repeats of 5-fold cross-validation. A high score indicates prognosis of a worse outcome than a lower risk score. Although we have provided the code below, to save time, **just load the prepared RDS file `classifyr_result_IMC.rds`** and we will focus on the interpretation in this workshop.
 
-```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}       
+```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}
 # We use the following variables:     
 # timeRFS: "Time to Recurrence-Free Survival." It is the time period until recurrence occurs.    
 # eventRFS: "Event in Recurrence-Free Survival."It indicates whether the event has occurred.    
@@ -1521,7 +1526,7 @@ classifyr_result_IMC <- readRDS(system.file("extdata",
 
 Cox proportional hazards is a classical statistical method, as opposed to machine learning methods like Random survival forest. These machine learning methods can build remarkably complex relationships between features, however their running time can be much longer than Cox proportional hazards. We use feature selection to limit the number of features considered to at most 100 per metafeature and to save time, **you can just load the prepared RDS file.** We will compare the predictive performance between these methods.
 
-```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}        
+```{r, eval=FALSE, warning=FALSE, error=FALSE, message=FALSE}
 nFeatures <- append(list(clinical = 1:3), lapply(scfeatures_result[2:length(scfeatures_result)], function(metaFeature) min(100, ncol(metaFeature))))
 survForestCV <- crossValidate(clinicalAndOmics, outcome, nFeatures = nFeatures,
                 classifier = "randomForest",
@@ -1571,7 +1576,6 @@ Does each individual require a different collection of features? Using `samplesM
 library(grid)
 samplesMetricMap(classifyr_result_IMC)
 ```
-
 :::
 
 # Appendix
