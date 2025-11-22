@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
-  NUS_workshop_v2: NUS_workshop_v2.html
-last_built: 2025-11-22T00:31Z
+  NUS_workshop_v3: NUS_workshop_v3.html
+last_built: 2025-11-22T10:49Z
 urls:
   reference: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/reference
   article: https://sydneybiox.github.io/scdneySpatial_ABACBS2025/articles
