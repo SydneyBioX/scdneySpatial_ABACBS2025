@@ -94,13 +94,6 @@ system.file(“extdata”, “MB0002_1_345_fullstack.tiff”, package =
 
 - Code
   ``` r
-  suppressPackageStartupMessages({
-    library(cytomapper)
-    library(EBImage)
-    library(S4Vectors)
-  })
-
-
   img_path <- system.file("extdata/raw_image", "MB0002_1_345_fullstack.tiff",
                           package = "scdneySpatialABACBS2025")
 
@@ -112,6 +105,7 @@ system.file(“extdata”, “MB0002_1_345_fullstack.tiff”, package =
   #Load image (multi-channel)
   images <- loadImages(img_path, single_channel = FALSE)
   names(images) <- sample_id
+
   #Load mask
   mask_img <- readImage(mask_path,as.is =T)
   masks <- CytoImageList(list(mask_img))
@@ -120,6 +114,7 @@ system.file(“extdata”, “MB0002_1_345_fullstack.tiff”, package =
   # Add metadata rows so img_id can be matched by COLUMN NAME
   mcols(images) <- DataFrame(sample_id = names(images))
   mcols(masks)  <- DataFrame(sample_id = names(masks))
+
 
   # Build channel names from CSVs and assign them
   metal_path <- system.file("extdata/raw_image", "channel_to_metal_order.csv",
@@ -211,54 +206,48 @@ the data to answer the questions below:
   data_sce
   ```
 
-      class: SingleCellExperiment
-      dim: 38 76307
-      metadata(0):
-      assays(2): counts logcounts
-      rownames(38): HH3_total CK19 ... H3K27me3 CK5
-      rowData names(0):
-      colnames(76307): MB-0002:345:93 MB-0002:345:107 ... MB-0663:394:577
-        MB-0663:394:578
-      colData names(17): file_id metabricId ... x_cord y_cord
-      reducedDimNames(1): UMAP
-      mainExpName: NULL
-      altExpNames(0):
+      # A SingleCellExperiment-tibble abstraction: 76,307 × 20
+      # [90mFeatures=38 | Cells=76307 | Assays=counts, logcounts[0m
+         .cell         file_id metabricId core_id ImageNumber ObjectNumber Fibronectin
+         <chr>         <chr>   <chr>        <int>       <int>        <int>       <dbl>
+       1 MB-0002:345:… MB0002… MB-0002          1         345           93       0.459
+       2 MB-0002:345:… MB0002… MB-0002          1         345          107       0.118
+       3 MB-0002:345:… MB0002… MB-0002          1         345          113       0.251
+       4 MB-0002:345:… MB0002… MB-0002          1         345          114       0.479
+       5 MB-0002:345:… MB0002… MB-0002          1         345          125       6.19
+       6 MB-0002:345:… MB0002… MB-0002          1         345          127       0.690
+       7 MB-0002:345:… MB0002… MB-0002          1         345          129       1.27
+       8 MB-0002:345:… MB0002… MB-0002          1         345          130       0.330
+       9 MB-0002:345:… MB0002… MB-0002          1         345          131       0.525
+      10 MB-0002:345:… MB0002… MB-0002          1         345          132       0.717
+      # ℹ 76,297 more rows
+      # ℹ 13 more variables: Location_Center_X <dbl>, Location_Center_Y <dbl>,
+      #   SOM_nodes <int>, pg_cluster <int>, description <chr>, region <chr>,
+      #   ki67 <chr>, celltype <chr>, sample <chr>, x_cord <dbl>, y_cord <dbl>,
+      #   UMAP1 <dbl>, UMAP2 <dbl>
 
   Code
   ``` r
   # Metadata
   #DT::datatable(data.frame(colData(data_sce)))
-  head(data.frame(colData(data_sce)))
+  data_sce |> 
+    as_tibble() |> 
+    head()
   ```
 
-                           file_id metabricId core_id ImageNumber ObjectNumber
-      MB-0002:345:93  MB0002_1_345    MB-0002       1         345           93
-      MB-0002:345:107 MB0002_1_345    MB-0002       1         345          107
-      MB-0002:345:113 MB0002_1_345    MB-0002       1         345          113
-      MB-0002:345:114 MB0002_1_345    MB-0002       1         345          114
-      MB-0002:345:125 MB0002_1_345    MB-0002       1         345          125
-      MB-0002:345:127 MB0002_1_345    MB-0002       1         345          127
-                      Fibronectin Location_Center_X Location_Center_Y SOM_nodes
-      MB-0002:345:93    0.4590055          179.7088          27.90110       130
-      MB-0002:345:107   0.1176471          193.0588          29.29412       131
-      MB-0002:345:113   0.2512903          162.1935          28.83871        83
-      MB-0002:345:114   0.4788444          198.3111          29.15556       128
-      MB-0002:345:125   6.1901112          262.8889          31.26667         7
-      MB-0002:345:127   0.6897432          136.0946          32.98649       130
-                      pg_cluster    description   region      ki67
-      MB-0002:345:93          54       HR- CK7- region_1  low_ki67
-      MB-0002:345:107         54       HR- CK7- region_4  low_ki67
-      MB-0002:345:113         28    HRlow CKlow region_1 high_ki67
-      MB-0002:345:114         54       HR- CK7- region_4 high_ki67
-      MB-0002:345:125         11 Myofibroblasts region_2  low_ki67
-      MB-0002:345:127         54       HR- CK7- region_1  low_ki67
-                                    celltype  sample   x_cord   y_cord
-      MB-0002:345:93        HR- CK7--region1 MB-0002 179.7088 27.90110
-      MB-0002:345:107       HR- CK7--region4 MB-0002 193.0588 29.29412
-      MB-0002:345:113    HRlow CKlow-region1 MB-0002 162.1935 28.83871
-      MB-0002:345:114       HR- CK7--region4 MB-0002 198.3111 29.15556
-      MB-0002:345:125 Myofibroblasts-region2 MB-0002 262.8889 31.26667
-      MB-0002:345:127       HR- CK7--region1 MB-0002 136.0946 32.98649
+      # A tibble: 6 × 20
+        .cell          file_id metabricId core_id ImageNumber ObjectNumber Fibronectin
+        <chr>          <chr>   <chr>        <int>       <int>        <int>       <dbl>
+      1 MB-0002:345:93 MB0002… MB-0002          1         345           93       0.459
+      2 MB-0002:345:1… MB0002… MB-0002          1         345          107       0.118
+      3 MB-0002:345:1… MB0002… MB-0002          1         345          113       0.251
+      4 MB-0002:345:1… MB0002… MB-0002          1         345          114       0.479
+      5 MB-0002:345:1… MB0002… MB-0002          1         345          125       6.19
+      6 MB-0002:345:1… MB0002… MB-0002          1         345          127       0.690
+      # ℹ 13 more variables: Location_Center_X <dbl>, Location_Center_Y <dbl>,
+      #   SOM_nodes <int>, pg_cluster <int>, description <chr>, region <chr>,
+      #   ki67 <chr>, celltype <chr>, sample <chr>, x_cord <dbl>, y_cord <dbl>,
+      #   UMAP1 <dbl>, UMAP2 <dbl>
 
 Here, we take a quick look at what our rows and columns represent and
 the dimensions of our data.
@@ -489,13 +478,6 @@ characeristics might indicate whether a sample(s) is low/high quality?
 Code
 
 ``` r
-cell_counts <- IMC@colData |>  as.data.frame() |>
-  dplyr::count(metabricId, name = "cell_count") |>  # Count rows per metabricId
-  dplyr::arrange(desc(cell_count)) 
-
-reducedDim(IMC, "spatialCoords") <- IMC@colData[,c("Location_Center_X","Location_Center_Y")]
-
-
 cell_type_mapping <- c(
   "B cells" = "B cell",
   "T cells" = "T cell",
@@ -528,18 +510,28 @@ cell_type_mapping <- c(
 )
 
 # Convert IMC description to higher-level categories
-IMC$high_level_category <- recode(IMC$description, !!!cell_type_mapping)
+data_sce$high_level_category <- recode(data_sce$description, !!!cell_type_mapping)
+
+# Count cells in each image
+cell_counts <- data_sce |> 
+  dplyr::count(metabricId, name = "cell_count") |> # Count rows per metabricId
+  arrange(desc(cell_count))
 
 
-imc.spe=IMC[,IMC$metabricId%in%cell_counts[1:20,]$metabricId]
+# Get the top 20 images with highest cell
+high_cell_images <- cell_counts |> 
+  head(20) |> 
+  pull(metabricId)
 
-# Convert IMC description to higher-level categories
-imc.spe$high_level_category <- recode(imc.spe$description, !!!cell_type_mapping)
 
-
-plots <- plot_marker_densities(imc.spe, sample_id_col = "metabricId",
-                                markers_to_plot = c("CD20","CD3","CD68","vWF_CD31","Vimentin","HER2"),
-                               assay_name = "logcounts")
+# Visualising marker densities for each image.
+plots <- data_sce |>
+  filter(metabricId %in% high_cell_images) |>
+  plot_marker_densities(
+    sample_id_col = "metabricId",
+    markers_to_plot = c("CD20", "CD3", "CD68", "vWF_CD31", "Vimentin", "HER2"),
+    assay_name = "logcounts"
+  )
 ```
 
 ### 2.1: QC for the panel / markers
@@ -616,18 +608,33 @@ Code
 useMarkers <- rownames(data_sce)[!rownames(data_sce) %in% c("DNA1", "DNA2", "HH3", "HH3_total", "HH3_ph")]
 
 # transform and normalise the marker expression of each cell type
-data_sce <- normalizeCells(data_sce,
-                        markers = useMarkers,
-                        transformation = NULL,
-                        method = c("trim99", "minMax", "PC1"),
-                        assayIn = "counts",
-                        imageID = "metabricId")
+data_sce <- normalizeCells(
+  data_sce,
+  markers = useMarkers,
+  transformation = NULL,
+  method = c("trim99", "minMax", "PC1"),
+  assayIn = "counts",
+  assayOut = "norm", # Normalised matrix stored in an assay called "norm"
+  imageID = "metabricId"
+)
 
-selected_patients = which(colData(data_sce)$metabricId %in% cell_counts[1:10,]$metabricId)
+selected_patients = cell_counts |> 
+  head(10) |> 
+  pull(metabricId)
 
-norm = plot_marker_densities(data_sce[,selected_patients], sample_id_col = "metabricId", markers_to_plot = "vWF_CD31", assay_name = "norm")$vWF_CD31 + theme(legend.position = "none") + ggtitle("Normalized Counts - CD31")
+norm = plot_marker_densities(
+  filter(data_sce, metabricId %in% selected_patients),
+  sample_id_col = "metabricId",
+  markers_to_plot = "vWF_CD31",
+  assay_name = "norm"
+)$vWF_CD31 + theme(legend.position = "none") + ggtitle("Normalized Counts - CD31")
 
-log = plot_marker_densities(data_sce[,selected_patients], sample_id_col = "metabricId", markers_to_plot = c("vWF_CD31"), assay_name = "logcounts")$vWF_CD31 + theme(legend.position = "none") + ggtitle("Log Counts - CD31")
+log = plot_marker_densities(
+  filter(data_sce, metabricId %in% selected_patients),
+  sample_id_col = "metabricId",
+  markers_to_plot = c("vWF_CD31"),
+  assay_name = "logcounts"
+)$vWF_CD31 + theme(legend.position = "none") + ggtitle("Log Counts - CD31")
 
 ggarrange(log, norm, ncol=2)
 ```
@@ -918,11 +925,6 @@ heatmaps_prop <- plot_pairwise_heatmaps_per_sample(coexp_df, marker_list, stat =
 Code
 
 ``` r
-cell_counts <- IMC@colData |>  as.data.frame() |>
-  dplyr::count(metabricId, name = "cell_count") |>  # Count rows per metabricId
-  dplyr::arrange(desc(cell_count)) 
-
-
 mean_coexp_per_sample <- coexp_df %>%
   dplyr::select(-cell_id, -cell_type) %>%  # remove columns not related to prob values
   group_by(metabricId) %>%
@@ -1007,19 +1009,17 @@ Fibroblasts, and HER2 to be highly expressed in Tumor HER2+ cells.
 Code
 
 ``` r
-# Calculate average expression per cell type
-avg_expr <- aggregate(t(assay(data_sce, "norm")), 
-                      by = list(CellType = IMC$high_level_category), 
-                      FUN = mean) %>%
-  tibble::column_to_rownames(var = "CellType")
-
-avg_expr <- avg_expr[, c("CD20", "CD3", "CD68", "CD45", 
-                         "vWF_CD31", "Vimentin", "HER2")]  # select only our mark
-
 # Plot heatmap of marker by celltype
-pheatmap(avg_expr, scale = "column", main = "Average Marker Expression per Cell Type\n", 
-         cluster_rows = FALSE,
-         color = colorRampPalette(c("blue", "white", "red"))(10000))
+scater::plotGroupedHeatmap(
+  object = data_sce,
+  features = c("CD20", "CD3", "CD68", "CD45", "vWF_CD31", "Vimentin", "HER2"),
+  group = "high_level_category",
+  exprs_values = "norm",
+  cluster_rows = FALSE,
+  block = "high_level_category",
+  center = TRUE,
+  scale = TRUE
+)
 ```
 
 ![](NUS_workshop_v2_files/figure-html/unnamed-chunk-18-1.png)
@@ -1190,10 +1190,6 @@ visualise the results.
 Code
 
 ``` r
-library(Banksy)
-library(SpatialExperiment)
-library(cowplot)
-
 ### The code below takes a while to run, so we have saved the output as an RDS file that can be loaded directly.
 
 # spe_base <- SpatialExperiment(
@@ -1879,7 +1875,6 @@ kinds of metafeatures.
 Code
 
 ``` r
-library(grid)
 samplesMetricMap(classifyr_result_IMC)
 ```
 
@@ -1888,7 +1883,7 @@ samplesMetricMap(classifyr_result_IMC)
     TableGrob (2 x 1) "arrange": 2 grobs
       z     cells    name                 grob
     1 1 (2-2,1-1) arrange       gtable[layout]
-    2 2 (1-1,1-1) arrange text[GRID.text.8777]
+    2 2 (1-1,1-1) arrange text[GRID.text.8775]
 
 ## Appendix
 
@@ -2071,35 +2066,36 @@ sessionInfo()
     tzcode source: system (glibc)
 
     attached base packages:
-    [1] grid      stats4    stats     graphics  grDevices utils     datasets
+    [1] stats4    grid      stats     graphics  grDevices utils     datasets
     [8] methods   base
 
     other attached packages:
-     [1] cowplot_1.2.0               SpatialExperiment_1.20.0
-     [3] Banksy_1.6.0                cytomapper_1.22.0
-     [5] EBImage_4.52.0              purrr_1.2.0
-     [7] simpleSeg_1.12.0            naniar_1.1.0
-     [9] reshape_0.8.10              scran_1.38.0
-    [11] scater_1.38.0               scuttle_1.20.0
-    [13] spatstat_3.4-1              spatstat.linnet_3.3-2
-    [15] spatstat.model_3.4-2        rpart_4.1.24
-    [17] spatstat.explore_3.5-3      nlme_3.1-168
-    [19] spatstat.random_3.4-2       spatstat.geom_3.6-1
-    [21] spatstat.univar_3.1-5       spatstat.data_3.1-9
-    [23] survminer_0.5.1             ggpubr_0.6.2
-    [25] tidyr_1.3.1                 scattermore_1.2
-    [27] plotly_4.11.0               limma_3.66.0
-    [29] dplyr_1.1.4                 spicyR_1.22.0
-    [31] pheatmap_1.0.13             ggthemes_5.1.0
-    [33] lisaClust_1.18.0            ClassifyR_3.14.0
-    [35] survival_3.8-3              BiocParallel_1.44.0
-    [37] MultiAssayExperiment_1.36.1 scFeatures_1.3.4
-    [39] ggplot2_4.0.1               SingleCellExperiment_1.32.0
-    [41] SummarizedExperiment_1.40.0 Biobase_2.70.0
-    [43] GenomicRanges_1.62.0        Seqinfo_1.0.0
-    [45] IRanges_2.44.0              S4Vectors_0.48.0
-    [47] BiocGenerics_0.56.0         generics_0.1.4
-    [49] MatrixGenerics_1.22.0       matrixStats_1.5.0
+     [1] SpatialExperiment_1.20.0        Banksy_1.6.0
+     [3] cytomapper_1.22.0               EBImage_4.52.0
+     [5] lisaClust_1.18.0                ClassifyR_3.14.0
+     [7] BiocParallel_1.44.0             MultiAssayExperiment_1.36.1
+     [9] scFeatures_1.3.4                spicyR_1.22.0
+    [11] limma_3.66.0                    scran_1.38.0
+    [13] scater_1.38.0                   scuttle_1.20.0
+    [15] simpleSeg_1.12.0                tidySingleCellExperiment_1.20.1
+    [17] ttservice_0.5.3                 SingleCellExperiment_1.32.0
+    [19] SummarizedExperiment_1.40.0     Biobase_2.70.0
+    [21] GenomicRanges_1.62.0            Seqinfo_1.0.0
+    [23] IRanges_2.44.0                  S4Vectors_0.48.0
+    [25] BiocGenerics_0.56.0             generics_0.1.4
+    [27] MatrixGenerics_1.22.0           matrixStats_1.5.0
+    [29] cowplot_1.2.0                   purrr_1.2.0
+    [31] naniar_1.1.0                    reshape_0.8.10
+    [33] spatstat_3.4-1                  spatstat.linnet_3.3-2
+    [35] spatstat.model_3.4-2            rpart_4.1.24
+    [37] spatstat.explore_3.5-3          nlme_3.1-168
+    [39] spatstat.random_3.4-2           spatstat.geom_3.6-1
+    [41] spatstat.univar_3.1-5           spatstat.data_3.1-9
+    [43] survminer_0.5.1                 ggpubr_0.6.2
+    [45] survival_3.8-3                  tidyr_1.3.1
+    [47] scattermore_1.2                 plotly_4.11.0
+    [49] dplyr_1.1.4                     pheatmap_1.0.13
+    [51] ggthemes_5.1.0                  ggplot2_4.0.1
 
     loaded via a namespace (and not attached):
       [1] igraph_2.2.1               graph_1.88.0
@@ -2118,8 +2114,8 @@ sessionInfo()
      [27] uwot_0.2.4                 curl_7.0.0
      [29] mime_0.13                  evaluate_1.0.5
      [31] tidytree_0.4.6             tiff_0.1-12
-     [33] ComplexHeatmap_2.26.0      ggh4x_0.3.1
-     [35] V8_8.0.1                   stringi_1.8.7
+     [33] V8_8.0.1                   ComplexHeatmap_2.26.0
+     [35] ggh4x_0.3.1                stringi_1.8.7
      [37] backports_1.5.0            lmerTest_3.1-3
      [39] XML_3.99-0.20              orthogene_1.16.0
      [41] httpuv_1.6.16              AnnotationDbi_1.72.0
@@ -2142,86 +2138,88 @@ sessionInfo()
      [75] XVector_0.50.0             knitr_1.50
      [77] nnls_1.6                   UCSC.utils_1.6.0
      [79] AUCell_1.32.0              foreach_1.5.2
-     [81] dcanr_1.26.0               patchwork_1.3.2
-     [83] data.table_1.17.8          ggtree_4.0.1
-     [85] rhdf5_2.54.0               R.oo_1.27.1
-     [87] ggiraph_0.9.2              irlba_2.3.5.1
-     [89] gridGraphics_0.5-1         lazyeval_0.2.2
-     [91] yaml_2.3.10                crayon_1.5.3
-     [93] RColorBrewer_1.1-3         tweenr_2.0.3
-     [95] later_1.4.4                codetools_0.2-20
-     [97] GlobalOptions_0.1.2        KEGGREST_1.50.0
-     [99] sccore_1.0.6               Rtsne_0.17
-    [101] shape_1.4.6.1              gdtools_0.4.4
-    [103] Rsamtools_2.26.0           filelock_1.0.3
-    [105] leidenAlg_1.1.5            pkgconfig_2.0.3
-    [107] GenomicAlignments_1.46.0   aplot_0.2.9
-    [109] spatstat.sparse_3.1-0      ape_5.8-1
-    [111] viridisLite_0.4.2          xtable_1.8-4
-    [113] car_3.1-3                  plyr_1.8.9
-    [115] httr_1.4.7                 rbibutils_2.4
-    [117] tools_4.5.2                beeswarm_0.4.0
-    [119] broom_1.0.10               dbplyr_2.5.1
-    [121] crosstalk_1.2.2            survMisc_0.5.6
-    [123] assertthat_0.2.1           lme4_1.1-37
-    [125] digest_0.6.39              numDeriv_2016.8-1.1
-    [127] Matrix_1.7-4               farver_2.1.2
-    [129] AnnotationFilter_1.34.0    reshape2_1.4.5
-    [131] yulab.utils_0.2.1          viridis_0.6.5
-    [133] glue_1.8.0                 cachem_1.1.0
-    [135] BiocFileCache_3.0.0        polyclip_1.10-7
-    [137] proxyC_0.5.2               Biostrings_2.78.0
-    [139] visdat_0.6.0               ggalluvial_0.12.5
-    [141] statmod_1.5.1              concaveman_1.2.0
-    [143] ScaledMatrix_1.18.0        fontBitstreamVera_0.1.1
-    [145] carData_3.0-5              minqa_1.2.8
-    [147] httr2_1.2.1                glmnet_4.1-10
-    [149] dqrng_0.4.1                gtools_3.9.5
-    [151] ggsignif_0.6.4             gridExtra_2.3
-    [153] shiny_1.11.1               GSVA_2.4.1
-    [155] BulkSignalR_1.2.1          R.utils_2.13.0
-    [157] rhdf5filters_1.22.0        RCurl_1.98-1.17
-    [159] memoise_2.0.1              rmarkdown_2.30
-    [161] scales_1.4.0               R.methodsS3_1.8.2
-    [163] stabledist_0.7-2           svglite_2.2.2
-    [165] RANN_2.6.2                 fontLiberation_0.1.0
-    [167] km.ci_0.5-6                EnsDb.Mmusculus.v79_2.99.0
-    [169] cluster_2.1.8.1            msigdbr_25.1.1
-    [171] spatstat.utils_3.2-0       coxme_2.2-22
-    [173] scam_1.2-20                colorspace_2.1-2
-    [175] rlang_1.1.6                EnsDb.Hsapiens.v79_2.99.0
-    [177] GenomeInfoDb_1.46.0        DelayedMatrixStats_1.32.0
-    [179] sparseMatrixStats_1.22.0   shinydashboard_0.7.3
-    [181] aricode_1.0.3              ggforce_0.5.0
-    [183] homologene_1.4.68.19.3.27  circlize_0.4.16
-    [185] dbscan_1.2.3               mgcv_1.9-3
-    [187] xfun_0.54                  iterators_1.0.14
-    [189] abind_1.4-8                tibble_3.3.0
-    [191] treeio_1.34.0              Rhdf5lib_1.32.0
-    [193] bitops_1.0-9               Rdpack_2.6.4
-    [195] fftwtools_0.9-11           promises_1.5.0
-    [197] RSQLite_2.4.4              DelayedArray_0.36.0
-    [199] compiler_4.5.2             boot_1.3-32
-    [201] beachmat_2.26.0            RcppHungarian_0.3
-    [203] Rcpp_1.1.0                 fontquiver_0.2.1
-    [205] edgeR_4.8.0                BiocSingular_1.26.1
-    [207] tensor_1.5.1               MASS_7.3-65
-    [209] ggupset_0.4.1              babelgene_22.9
-    [211] R6_2.6.1                   fastmap_1.2.0
-    [213] rstatix_0.7.3              vipor_0.4.7
-    [215] ensembldb_2.34.0           rsvd_1.0.5
-    [217] gtable_0.3.6               deldir_2.0-4
-    [219] htmltools_0.5.8.1          bit64_4.6.0-1
-    [221] lifecycle_1.0.4            S7_0.2.1
-    [223] nloptr_2.2.1               restfulr_0.0.16
-    [225] sass_0.4.10                vctrs_0.6.5
-    [227] ggfun_0.2.0                sp_2.2-0
-    [229] bslib_0.9.0                gprofiler2_0.2.4
-    [231] pillar_1.11.1              GenomicFeatures_1.62.0
-    [233] magick_2.9.0               metapod_1.18.0
-    [235] locfit_1.5-9.12            otel_0.2.0
-    [237] jsonlite_2.0.0             svgPanZoom_0.3.4
-    [239] cigarillo_1.0.0            GetoptLong_1.0.5          
+     [81] fansi_1.0.7                dcanr_1.26.0
+     [83] patchwork_1.3.2            data.table_1.17.8
+     [85] ggtree_4.0.1               rhdf5_2.54.0
+     [87] R.oo_1.27.1                ggiraph_0.9.2
+     [89] irlba_2.3.5.1              gridGraphics_0.5-1
+     [91] ellipsis_0.3.2             lazyeval_0.2.2
+     [93] yaml_2.3.10                crayon_1.5.3
+     [95] RColorBrewer_1.1-3         tweenr_2.0.3
+     [97] later_1.4.4                codetools_0.2-20
+     [99] GlobalOptions_0.1.2        KEGGREST_1.50.0
+    [101] sccore_1.0.6               Rtsne_0.17
+    [103] shape_1.4.6.1              gdtools_0.4.4
+    [105] Rsamtools_2.26.0           filelock_1.0.3
+    [107] leidenAlg_1.1.5            pkgconfig_2.0.3
+    [109] GenomicAlignments_1.46.0   aplot_0.2.9
+    [111] spatstat.sparse_3.1-0      ape_5.8-1
+    [113] viridisLite_0.4.2          xtable_1.8-4
+    [115] car_3.1-3                  plyr_1.8.9
+    [117] httr_1.4.7                 rbibutils_2.4
+    [119] tools_4.5.2                beeswarm_0.4.0
+    [121] broom_1.0.10               dbplyr_2.5.1
+    [123] crosstalk_1.2.2            survMisc_0.5.6
+    [125] assertthat_0.2.1           lme4_1.1-37
+    [127] digest_0.6.39              numDeriv_2016.8-1.1
+    [129] Matrix_1.7-4               farver_2.1.2
+    [131] AnnotationFilter_1.34.0    reshape2_1.4.5
+    [133] yulab.utils_0.2.1          viridis_0.6.5
+    [135] glue_1.8.0                 cachem_1.1.0
+    [137] BiocFileCache_3.0.0        polyclip_1.10-7
+    [139] proxyC_0.5.2               Biostrings_2.78.0
+    [141] visdat_0.6.0               ggalluvial_0.12.5
+    [143] statmod_1.5.1              concaveman_1.2.0
+    [145] ScaledMatrix_1.18.0        fontBitstreamVera_0.1.1
+    [147] carData_3.0-5              minqa_1.2.8
+    [149] httr2_1.2.1                glmnet_4.1-10
+    [151] dqrng_0.4.1                utf8_1.2.6
+    [153] gtools_3.9.5               ggsignif_0.6.4
+    [155] gridExtra_2.3              shiny_1.11.1
+    [157] GSVA_2.4.1                 BulkSignalR_1.2.1
+    [159] R.utils_2.13.0             rhdf5filters_1.22.0
+    [161] RCurl_1.98-1.17            memoise_2.0.1
+    [163] rmarkdown_2.30             scales_1.4.0
+    [165] R.methodsS3_1.8.2          stabledist_0.7-2
+    [167] svglite_2.2.2              RANN_2.6.2
+    [169] fontLiberation_0.1.0       km.ci_0.5-6
+    [171] EnsDb.Mmusculus.v79_2.99.0 cluster_2.1.8.1
+    [173] msigdbr_25.1.1             spatstat.utils_3.2-0
+    [175] coxme_2.2-22               scam_1.2-20
+    [177] colorspace_2.1-2           rlang_1.1.6
+    [179] EnsDb.Hsapiens.v79_2.99.0  GenomeInfoDb_1.46.0
+    [181] DelayedMatrixStats_1.32.0  sparseMatrixStats_1.22.0
+    [183] shinydashboard_0.7.3       aricode_1.0.3
+    [185] ggforce_0.5.0              homologene_1.4.68.19.3.27
+    [187] circlize_0.4.16            dbscan_1.2.3
+    [189] mgcv_1.9-3                 xfun_0.54
+    [191] iterators_1.0.14           abind_1.4-8
+    [193] tibble_3.3.0               treeio_1.34.0
+    [195] Rhdf5lib_1.32.0            bitops_1.0-9
+    [197] Rdpack_2.6.4               fftwtools_0.9-11
+    [199] promises_1.5.0             RSQLite_2.4.4
+    [201] DelayedArray_0.36.0        compiler_4.5.2
+    [203] boot_1.3-32                beachmat_2.26.0
+    [205] RcppHungarian_0.3          Rcpp_1.1.0
+    [207] fontquiver_0.2.1           edgeR_4.8.0
+    [209] BiocSingular_1.26.1        tensor_1.5.1
+    [211] MASS_7.3-65                ggupset_0.4.1
+    [213] babelgene_22.9             R6_2.6.1
+    [215] fastmap_1.2.0              rstatix_0.7.3
+    [217] vipor_0.4.7                ensembldb_2.34.0
+    [219] rsvd_1.0.5                 gtable_0.3.6
+    [221] deldir_2.0-4               htmltools_0.5.8.1
+    [223] bit64_4.6.0-1              lifecycle_1.0.4
+    [225] S7_0.2.1                   nloptr_2.2.1
+    [227] restfulr_0.0.16            sass_0.4.10
+    [229] vctrs_0.6.5                ggfun_0.2.0
+    [231] sp_2.2-0                   bslib_0.9.0
+    [233] gprofiler2_0.2.4           pillar_1.11.1
+    [235] GenomicFeatures_1.62.0     magick_2.9.0
+    [237] metapod_1.18.0             locfit_1.5-9.12
+    [239] otel_0.2.0                 jsonlite_2.0.0
+    [241] svgPanZoom_0.3.4           cigarillo_1.0.0
+    [243] GetoptLong_1.0.5          
 
 ### Acknowledgments
 
