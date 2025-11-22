@@ -78,6 +78,10 @@
   color: black;
   border-radius: 10px;
 }
+.panel-tabset .tab-content,
+.panel-tabset .tab-pane {
+  text-align: left;
+}
 </style>
 <p><strong>Presenting authors</strong></p>
 <p>Harry Robertson<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">^{1,2,3}</annotation></semantics></math>, Lijia Yu<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">^{1,2}</annotation></semantics></math>, Beilei Bian<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">^{1,2}</annotation></semantics></math>, Andrew Zhang<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mn>1</mn><mo>,</mo><mn>4</mn></mrow></msup><annotation encoding="application/x-tex">^{1,4}</annotation></semantics></math>, Jean Yang<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">^{1,2,3}</annotation></semantics></math>.</p>
@@ -1518,8 +1522,8 @@ H3K27me3    447.5419</code></pre>
 <span><span class="va">tT</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">tT</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="va">tT</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-abb57f6075fbbcded947" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-abb57f6075fbbcded947">{"x":{"filter":"none","vertical":false,"data":[["HR+ CK7--region5--c_Myc","HR+ CK7--region5--CAIX","HR+ CK7--region5--Twist","HR+ CK7--region5--vWF_CD31","HR+ CK7--region5--EpCAM","HR+ CK7--region5--HH3_ph","HR+ CK7--region5--HER2","HR+ CK7--region5--p53","HR+ CK7--region5--pS6","HR+ CK7--region5--CD3","HR+ CK7--region5--CK14","HR+ CK7--region5--PR","HR+ CK7--region5--CD45","HR+ CK7--region5--H3K27me3","HR+ CK7--region5--Slug","HR+ CK7--region5--Erk1_2","HR+ CK7--region5--c_PARP_c_Casp3","HR+ CK7--region5--CD68","HR+ CK7--region5--CK8_18","HR+ CK7--region5--pmTOR","HR+ CK7--region5--CD20","HR+ CK7--region5--Ki67","HR+ CK7--region5--DNA1","HR+ CK7--region5--DNA2","HR+ CK7--region5--E_cadherin","HR+ CK7--region5--HH3_total","HR+ CK7--region5--Beta_catenin","HR+ CK7--region5--panCK","HR+ CK7--region5--CK7","HR+ CK7--region5--CD44","HR+ CK7--region5--SMA","HR+ CK7--region5--GATA3","HR+ CK7--region5--ER","HR+ CK7--region5--Vimentin","HR+ CK7--region5--CK19","HR+ CK7--region5--CK5","HR+ CK7--region5--EGFR","HR+ CK7--region5--Sox9"],[-0.2,-0.14,-0.2,-0.24,-0.2,-0.12,-0.51,-0.049,-0.17,-0.033,0.08500000000000001,-1.8,-0.075,-0.34,-0.14,-0.12,-0.35,-0.043,-1.6,-0.075,-0.061,-0.052,-5.4,-9.800000000000001,-0.38,-1.1,-0.11,-1.1,0.52,-1.3,0.17,0.65,-0.75,0.04,-0.2,0.055,-0.012,-0.0018],[0.39,0.41,0.42,0.73,0.65,0.4,1,0.15,0.41,0.1,0.13,3.3,0.26,1.3,0.28,0.31,1.8,0.15,4.3,0.38,0.24,0.2,31,56,2.2,6.8,0.76,5.6,2,6,0.52,3.9,4.4,0.15,1.4,0.52,0.28,0.17],[-2.5,-2.2,-2.2,-2,-2,-2,-2,-1.9,-1.9,-1.7,1.6,-1.6,-1.5,-1.4,-1.4,-1.3,-1.3,-1.3,-1.2,-1.2,-1.2,-1.2,-1.2,-1.1,-1.1,-0.97,-0.8100000000000001,-0.8,0.74,-0.72,0.6899999999999999,0.66,-0.61,0.55,-0.53,0.48,-0.2,-0.052],[0.015,0.033,0.036,0.048,0.048,0.051,0.058,0.058,0.068,0.097,0.12,0.13,0.14,0.16,0.18,0.2,0.21,0.21,0.22,0.22,0.23,0.24,0.26,0.26,0.26,0.34,0.42,0.43,0.46,0.48,0.49,0.51,0.55,0.58,0.6,0.63,0.84,0.96],[0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.29,0.37,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.49,0.58,0.58,0.6,0.6,0.61,0.61,0.63,0.65,0.65,0.67,0.86,0.96],[-3.2,-3.6,-3.7,-3.8,-3.8,-3.9,-3.9,-3.9,-4,-4.2,-4.3,-4.3,-4.4,-4.5,-4.5,-4.6,-4.6,-4.6,-4.6,-4.6,-4.7,-4.7,-4.7,-4.7,-4.7,-4.8,-4.9,-4.9,-4.9,-5,-5,-5,-5,-5,-5,-5.1,-5.1,-5.1],["HR+ CK7--region5--c_Myc","HR+ CK7--region5--CAIX","HR+ CK7--region5--Twist","HR+ CK7--region5--vWF_CD31","HR+ CK7--region5--EpCAM","HR+ CK7--region5--HH3_ph","HR+ CK7--region5--HER2","HR+ CK7--region5--p53","HR+ CK7--region5--pS6","HR+ CK7--region5--CD3","HR+ CK7--region5--CK14","HR+ CK7--region5--PR","HR+ CK7--region5--CD45","HR+ CK7--region5--H3K27me3","HR+ CK7--region5--Slug","HR+ CK7--region5--Erk1_2","HR+ CK7--region5--c_PARP_c_Casp3","HR+ CK7--region5--CD68","HR+ CK7--region5--CK8_18","HR+ CK7--region5--pmTOR","HR+ CK7--region5--CD20","HR+ CK7--region5--Ki67","HR+ CK7--region5--DNA1","HR+ CK7--region5--DNA2","HR+ CK7--region5--E_cadherin","HR+ CK7--region5--HH3_total","HR+ CK7--region5--Beta_catenin","HR+ CK7--region5--panCK","HR+ CK7--region5--CK7","HR+ CK7--region5--CD44","HR+ CK7--region5--SMA","HR+ CK7--region5--GATA3","HR+ CK7--region5--ER","HR+ CK7--region5--Vimentin","HR+ CK7--region5--CK19","HR+ CK7--region5--CK5","HR+ CK7--region5--EGFR","HR+ CK7--region5--Sox9"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>logFC<\/th>\n      <th>AveExpr<\/th>\n      <th>t<\/th>\n      <th>P.Value<\/th>\n      <th>adj.P.Val<\/th>\n      <th>B<\/th>\n      <th>gene<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"logFC","targets":1},{"name":"AveExpr","targets":2},{"name":"t","targets":3},{"name":"P.Value","targets":4},{"name":"adj.P.Val","targets":5},{"name":"B","targets":6},{"name":"gene","targets":7}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-cd2f61beedee0c125c81" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cd2f61beedee0c125c81">{"x":{"filter":"none","vertical":false,"data":[["HR+ CK7--region5--c_Myc","HR+ CK7--region5--CAIX","HR+ CK7--region5--Twist","HR+ CK7--region5--vWF_CD31","HR+ CK7--region5--EpCAM","HR+ CK7--region5--HH3_ph","HR+ CK7--region5--HER2","HR+ CK7--region5--p53","HR+ CK7--region5--pS6","HR+ CK7--region5--CD3","HR+ CK7--region5--CK14","HR+ CK7--region5--PR","HR+ CK7--region5--CD45","HR+ CK7--region5--H3K27me3","HR+ CK7--region5--Slug","HR+ CK7--region5--Erk1_2","HR+ CK7--region5--c_PARP_c_Casp3","HR+ CK7--region5--CD68","HR+ CK7--region5--CK8_18","HR+ CK7--region5--pmTOR","HR+ CK7--region5--CD20","HR+ CK7--region5--Ki67","HR+ CK7--region5--DNA1","HR+ CK7--region5--DNA2","HR+ CK7--region5--E_cadherin","HR+ CK7--region5--HH3_total","HR+ CK7--region5--Beta_catenin","HR+ CK7--region5--panCK","HR+ CK7--region5--CK7","HR+ CK7--region5--CD44","HR+ CK7--region5--SMA","HR+ CK7--region5--GATA3","HR+ CK7--region5--ER","HR+ CK7--region5--Vimentin","HR+ CK7--region5--CK19","HR+ CK7--region5--CK5","HR+ CK7--region5--EGFR","HR+ CK7--region5--Sox9"],[-0.2,-0.14,-0.2,-0.24,-0.2,-0.12,-0.51,-0.049,-0.17,-0.033,0.08500000000000001,-1.8,-0.075,-0.34,-0.14,-0.12,-0.35,-0.043,-1.6,-0.075,-0.061,-0.052,-5.4,-9.800000000000001,-0.38,-1.1,-0.11,-1.1,0.52,-1.3,0.17,0.65,-0.75,0.04,-0.2,0.055,-0.012,-0.0018],[0.39,0.41,0.42,0.73,0.65,0.4,1,0.15,0.41,0.1,0.13,3.3,0.26,1.3,0.28,0.31,1.8,0.15,4.3,0.38,0.24,0.2,31,56,2.2,6.8,0.76,5.6,2,6,0.52,3.9,4.4,0.15,1.4,0.52,0.28,0.17],[-2.5,-2.2,-2.2,-2,-2,-2,-2,-1.9,-1.9,-1.7,1.6,-1.6,-1.5,-1.4,-1.4,-1.3,-1.3,-1.3,-1.2,-1.2,-1.2,-1.2,-1.2,-1.1,-1.1,-0.97,-0.8100000000000001,-0.8,0.74,-0.72,0.6899999999999999,0.66,-0.61,0.55,-0.53,0.48,-0.2,-0.052],[0.015,0.033,0.036,0.048,0.048,0.051,0.058,0.058,0.068,0.097,0.12,0.13,0.14,0.16,0.18,0.2,0.21,0.21,0.22,0.22,0.23,0.24,0.26,0.26,0.26,0.34,0.42,0.43,0.46,0.48,0.49,0.51,0.55,0.58,0.6,0.63,0.84,0.96],[0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.29,0.37,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.49,0.58,0.58,0.6,0.6,0.61,0.61,0.63,0.65,0.65,0.67,0.86,0.96],[-3.2,-3.6,-3.7,-3.8,-3.8,-3.9,-3.9,-3.9,-4,-4.2,-4.3,-4.3,-4.4,-4.5,-4.5,-4.6,-4.6,-4.6,-4.6,-4.6,-4.7,-4.7,-4.7,-4.7,-4.7,-4.8,-4.9,-4.9,-4.9,-5,-5,-5,-5,-5,-5,-5.1,-5.1,-5.1],["HR+ CK7--region5--c_Myc","HR+ CK7--region5--CAIX","HR+ CK7--region5--Twist","HR+ CK7--region5--vWF_CD31","HR+ CK7--region5--EpCAM","HR+ CK7--region5--HH3_ph","HR+ CK7--region5--HER2","HR+ CK7--region5--p53","HR+ CK7--region5--pS6","HR+ CK7--region5--CD3","HR+ CK7--region5--CK14","HR+ CK7--region5--PR","HR+ CK7--region5--CD45","HR+ CK7--region5--H3K27me3","HR+ CK7--region5--Slug","HR+ CK7--region5--Erk1_2","HR+ CK7--region5--c_PARP_c_Casp3","HR+ CK7--region5--CD68","HR+ CK7--region5--CK8_18","HR+ CK7--region5--pmTOR","HR+ CK7--region5--CD20","HR+ CK7--region5--Ki67","HR+ CK7--region5--DNA1","HR+ CK7--region5--DNA2","HR+ CK7--region5--E_cadherin","HR+ CK7--region5--HH3_total","HR+ CK7--region5--Beta_catenin","HR+ CK7--region5--panCK","HR+ CK7--region5--CK7","HR+ CK7--region5--CD44","HR+ CK7--region5--SMA","HR+ CK7--region5--GATA3","HR+ CK7--region5--ER","HR+ CK7--region5--Vimentin","HR+ CK7--region5--CK19","HR+ CK7--region5--CK5","HR+ CK7--region5--EGFR","HR+ CK7--region5--Sox9"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>logFC<\/th>\n      <th>AveExpr<\/th>\n      <th>t<\/th>\n      <th>P.Value<\/th>\n      <th>adj.P.Val<\/th>\n      <th>B<\/th>\n      <th>gene<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"logFC","targets":1},{"name":"AveExpr","targets":2},{"name":"t","targets":3},{"name":"P.Value","targets":4},{"name":"adj.P.Val","targets":5},{"name":"B","targets":6},{"name":"gene","targets":7}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>We visualise the comparison using a volcano plot and a dotplot for the cell-type specific expression feature. This is a type of scatter-plot that is used to quickly identify changes in large datasets and represent the significance (y-axis) versus effect size or fold-change (x-axis).</p>
@@ -2071,7 +2075,7 @@ other attached packages:
 [13] spatstat_3.4-1              spatstat.linnet_3.3-2
 [15] spatstat.model_3.4-2        rpart_4.1.24
 [17] spatstat.explore_3.5-3      nlme_3.1-168
-[19] spatstat.random_3.4-2       spatstat.geom_3.6-0
+[19] spatstat.random_3.4-2       spatstat.geom_3.6-1
 [21] spatstat.univar_3.1-5       spatstat.data_3.1-9
 [23] survminer_0.5.1             ggpubr_0.6.2
 [25] tidyr_1.3.1                 scattermore_1.2
@@ -2080,7 +2084,7 @@ other attached packages:
 [31] pheatmap_1.0.13             ggthemes_5.1.0
 [33] lisaClust_1.18.0            ClassifyR_3.14.0
 [35] survival_3.8-3              BiocParallel_1.44.0
-[37] MultiAssayExperiment_1.36.0 scFeatures_1.3.4
+[37] MultiAssayExperiment_1.36.1 scFeatures_1.3.4
 [39] ggplot2_4.0.1               SingleCellExperiment_1.32.0
 [41] SummarizedExperiment_1.40.0 Biobase_2.70.0
 [43] GenomicRanges_1.62.0        Seqinfo_1.0.0
@@ -2123,7 +2127,7 @@ loaded via a namespace (and not attached):
  [63] bdsmatrix_1.3-7            rtracklayer_1.70.0
  [65] htmlwidgets_1.6.4          fs_1.6.6
  [67] ggrepel_0.9.6              labeling_0.4.3
- [69] SparseArray_1.10.1         SingleCellSignalR_2.0.1
+ [69] SparseArray_1.10.2         SingleCellSignalR_2.0.1
  [71] h5mread_1.2.0              annotate_1.88.0
  [73] zoo_1.8-14                 raster_3.6-32
  [75] XVector_0.50.0             knitr_1.50
@@ -2151,7 +2155,7 @@ loaded via a namespace (and not attached):
 [119] broom_1.0.10               dbplyr_2.5.1
 [121] crosstalk_1.2.2            survMisc_0.5.6
 [123] assertthat_0.2.1           lme4_1.1-37
-[125] digest_0.6.38              numDeriv_2016.8-1.1
+[125] digest_0.6.39              numDeriv_2016.8-1.1
 [127] Matrix_1.7-4               farver_2.1.2
 [129] AnnotationFilter_1.34.0    reshape2_1.4.5
 [131] yulab.utils_0.2.1          viridis_0.6.5
@@ -2191,7 +2195,7 @@ loaded via a namespace (and not attached):
 [199] compiler_4.5.2             boot_1.3-32
 [201] beachmat_2.26.0            RcppHungarian_0.3
 [203] Rcpp_1.1.0                 fontquiver_0.2.1
-[205] edgeR_4.8.0                BiocSingular_1.26.0
+[205] edgeR_4.8.0                BiocSingular_1.26.1
 [207] tensor_1.5.1               MASS_7.3-65
 [209] ggupset_0.4.1              babelgene_22.9
 [211] R6_2.6.1                   fastmap_1.2.0

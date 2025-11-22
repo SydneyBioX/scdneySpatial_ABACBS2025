@@ -2084,7 +2084,7 @@ sessionInfo()
     [13] spatstat_3.4-1              spatstat.linnet_3.3-2
     [15] spatstat.model_3.4-2        rpart_4.1.24
     [17] spatstat.explore_3.5-3      nlme_3.1-168
-    [19] spatstat.random_3.4-2       spatstat.geom_3.6-0
+    [19] spatstat.random_3.4-2       spatstat.geom_3.6-1
     [21] spatstat.univar_3.1-5       spatstat.data_3.1-9
     [23] survminer_0.5.1             ggpubr_0.6.2
     [25] tidyr_1.3.1                 scattermore_1.2
@@ -2093,7 +2093,7 @@ sessionInfo()
     [31] pheatmap_1.0.13             ggthemes_5.1.0
     [33] lisaClust_1.18.0            ClassifyR_3.14.0
     [35] survival_3.8-3              BiocParallel_1.44.0
-    [37] MultiAssayExperiment_1.36.0 scFeatures_1.3.4
+    [37] MultiAssayExperiment_1.36.1 scFeatures_1.3.4
     [39] ggplot2_4.0.1               SingleCellExperiment_1.32.0
     [41] SummarizedExperiment_1.40.0 Biobase_2.70.0
     [43] GenomicRanges_1.62.0        Seqinfo_1.0.0
@@ -2136,7 +2136,7 @@ sessionInfo()
      [63] bdsmatrix_1.3-7            rtracklayer_1.70.0
      [65] htmlwidgets_1.6.4          fs_1.6.6
      [67] ggrepel_0.9.6              labeling_0.4.3
-     [69] SparseArray_1.10.1         SingleCellSignalR_2.0.1
+     [69] SparseArray_1.10.2         SingleCellSignalR_2.0.1
      [71] h5mread_1.2.0              annotate_1.88.0
      [73] zoo_1.8-14                 raster_3.6-32
      [75] XVector_0.50.0             knitr_1.50
@@ -2164,7 +2164,7 @@ sessionInfo()
     [119] broom_1.0.10               dbplyr_2.5.1
     [121] crosstalk_1.2.2            survMisc_0.5.6
     [123] assertthat_0.2.1           lme4_1.1-37
-    [125] digest_0.6.38              numDeriv_2016.8-1.1
+    [125] digest_0.6.39              numDeriv_2016.8-1.1
     [127] Matrix_1.7-4               farver_2.1.2
     [129] AnnotationFilter_1.34.0    reshape2_1.4.5
     [131] yulab.utils_0.2.1          viridis_0.6.5
@@ -2204,7 +2204,7 @@ sessionInfo()
     [199] compiler_4.5.2             boot_1.3-32
     [201] beachmat_2.26.0            RcppHungarian_0.3
     [203] Rcpp_1.1.0                 fontquiver_0.2.1
-    [205] edgeR_4.8.0                BiocSingular_1.26.0
+    [205] edgeR_4.8.0                BiocSingular_1.26.1
     [207] tensor_1.5.1               MASS_7.3-65
     [209] ggupset_0.4.1              babelgene_22.9
     [211] R6_2.6.1                   fastmap_1.2.0
