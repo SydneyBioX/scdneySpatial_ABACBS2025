@@ -520,6 +520,7 @@ labels <- ifelse(is.na(merged$marker), merged$metal, merged$marker)
 
 # Assign channel names to the multi-channel image
 channelNames(images) <- labels
+
 marker = plotPixels(
   image = images,
   colour_by = "Total HH3"
@@ -973,7 +974,7 @@ scater::plotGroupedHeatmap(
 We can also visualise the cell type clusters in a UMAP. We now examine cell-type-specific clustering patterns. Distinct, biologically meaningful clusters should emerge for each annotated cell type. The presence of heterogeneous clusters containing unrelated cell types may indicate incomplete or inaccurate cell-type annotations.
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-plotUMAP(data_sce, colour_by = "description")
+plotUMAP(data_sce, colour_by = "high_level_category")
 ```
 
 ::: Discussion
@@ -1113,6 +1114,7 @@ hatchingPlot(
   cellType = "description",
   spatialCoords = c("Location_Center_X", "Location_Center_Y")
 )
+
 ```
 
 <!-- We can also visualise the spatial region detection results across multiple individuals side by side for comparison. Below is an example of visualising two individuals, `MB-0002` and `MB-0064`. Notice the different cell type compositions in the different regions between the two individuals. -->
