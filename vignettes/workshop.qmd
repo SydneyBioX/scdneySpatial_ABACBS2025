@@ -85,7 +85,7 @@ suppressMessages({
   library(SpatialExperiment)
 
   # loading workshop data
-  devtools::load_all("../")
+  #devtools::load_all("../")
 })
 ```
 
