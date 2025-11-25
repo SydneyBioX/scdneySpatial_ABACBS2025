@@ -2,8 +2,8 @@
 
 **Presenting authors**
 
-Harry Robertson$^{1,2,3}$, Lijia Yu$^{1,2}$, Beilei Bian$^{1,2}$, Andrew
-Zhang$^{1,4}$, Jean Yang$^{1,2,3}$.
+Farhan Ameen$^{1,2}$, Shreya Rao$^{1,2}$, Lijia Yu$^{1,2}$, Daniel
+Kim$^{1,4}$, Jean Yang$^{1,2,3}$.
 
 **Contributors**
 
@@ -16,7 +16,7 @@ Australia
 $^{2}$ School of Mathematics and Statistics, University of Sydney,
 Australia  
 $^{3}$ Charles Perkins Centre, University of Sydney, Australia  
-$^{4}$ School of Computer Science, University of Sydney, Australia
+$^{4}$ Faculty of Medicine and Health, University of Sydney, Australia  
 
   
 Contact: jean.yang@sydney.edu.au
@@ -994,13 +994,29 @@ tt
 
 ### 2.5: Cell Type Classification
 
-Here, we can also check whether the cell type annotations we have make
-sense. One way to do this is to check whether the marker expression
-levels agree with the cell type annotations. For example, we expect CD3
-to be highly expressed in T cells, CD20 to be highly expressed in B
-cells, CD68 to be highly expressed in Macrophages, vWF_CD31 to be highly
-expressed in Endothelial cells, Vimentin to be highly expressed in
-Fibroblasts, and HER2 to be highly expressed in Tumor HER2+ cells.
+There are two approaches for performing cell types annotation:
+
+For unannotated data, two primary annotation strategies are available:
+
+- Unsupervised approach: cluster cells and identify marker genes for
+  manual annotation.
+- Supervised approach: transfer labels from reference datasets using
+  supervised learning/classification tools.
+
+For supervised annotation, we recommend
+[scClassify](https://pmc.ncbi.nlm.nih.gov/articles/PMC7306901/), a
+robust framework for cell-type classification. Below we visualise the
+data with and without spatial information before exploring the data
+further.
+
+Once cell type annotation is complete, we can also check whether they
+make sense by investigating marker expression patterns. One way to do
+this is to check whether the marker expression levels agree with the
+cell type annotations. For example, we expect CD3 to be highly expressed
+in T cells, CD20 to be highly expressed in B cells, CD68 to be highly
+expressed in Macrophages, vWF_CD31 to be highly expressed in Endothelial
+cells, Vimentin to be highly expressed in Fibroblasts, and HER2 to be
+highly expressed in Tumor HER2+ cells.
 
 Code
 
@@ -1020,37 +1036,13 @@ scater::plotGroupedHeatmap(
 
 ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-18-1.png)
 
-*Discussion*
+#### Visualisation of Cell Types
 
-- How might be check whether these results make sense? What potential
-  issues might we find?
-
-  
-
-## Part 3: Digital segmentation
-
-This section assumes pre-existing cell type annotations. For unannotated
-data, two primary annotation strategies are available:
-
-- Unsupervised approach: cluster cells and identify marker genes for
-  manual annotation.
-- Supervised approach: transfer labels from reference datasets using
-  supervised learning/classification tools.
-
-For supervised annotation, we recommend
-[scClassify](https://pmc.ncbi.nlm.nih.gov/articles/PMC7306901/), a
-robust framework for cell-type classification. Below we visualise the
-data with and without spatial information before exploring the data
-further.
-
-#### Cell types
-
-Following initial assessment of potential batch effects through
-sample-origin visualization, we now examine cell-type-specific
-clustering patterns. Distinct, biologically meaningful clusters should
-emerge for each annotated cell type. The presence of heterogeneous
-clusters containing unrelated cell types may indicate incomplete or
-inaccurate cell-type annotations.
+We can also visualise the cell type clusters in a UMAP. We now examine
+cell-type-specific clustering patterns. Distinct, biologically
+meaningful clusters should emerge for each annotated cell type. The
+presence of heterogeneous clusters containing unrelated cell types may
+indicate incomplete or inaccurate cell-type annotations.
 
 Code
 
@@ -1060,14 +1052,29 @@ plotUMAP(data_sce, colour_by = "description")
 
 ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-19-1.png)
 
-#### Spatial structure
+*Discussion*
 
-The advantage with spatial omics is that we can examine the organisation
-of the cell-types as it occurs on the tissue slide. Here, we visualise
-one of the slides from a patient. We select a particular patient
-“MB-0002” and visualise the tissue sample from this patient using
-ggplot. Do we see any spatial patterning or does it look randomly
-distributed?
+- How might be check whether these results make sense? What potential
+  issues might we find?
+
+  
+
+## Part 3: Digital segmentation
+
+Background: The advantage with spatial omics is that we can examine the
+organisation of the cell-types as it occurs on the tissue slide. One of
+the most common questions or analyses in spatial data is spatial domain
+detection. “Spatial domains” are regions within a tissue where cells
+share similar gene expression profiles and are physically clustered
+together. Here, we will use the terminology “spatial domain” and
+“regions” interchangeably. Most common analytical strategies involve
+spatial clustering, where different methods use different levels of
+information, such as gene expression data only, cell type information,
+and spatial coordinates.
+
+First, we visualise a slide from patient “MB-0002” to get a feel for
+spatial omics data. Do we see any spatial patterning or does it look
+randomly distributed?
 
 Code
 
@@ -1086,13 +1093,13 @@ one_sample |>
 
 ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-20-1.png)
 
+  
+
 **Questions**
 
 1.  What kinds of spatial information might be of interest given the
     question we’d like to answer?
 2.  How might we try to capture these spatial relationships?
-
-  
 
 - [Spatial regions](#tabset-7-1)
 - [Spatial regions detection across multiple individuals
@@ -1102,27 +1109,21 @@ one_sample |>
 
 &nbsp;
 
-- Background: One of the most common questions or analyses in spatial
-  data is spatial domain detection. “Spatial domains” are regions within
-  a tissue where cells share similar gene expression profiles and are
-  physically clustered together. Here, we will use the terminology
-  “spatial domain” and “regions” interchangeably. Most common analytical
-  strategies involve spatial clustering, where different methods use
-  different levels of information, such as gene expression data only,
-  cell type information, and spatial coordinates.
+- There are many ways to identify spatial regions (digital
+  segmentation). The strategy we demonstrate here uses the `lisaClust`
+  function, which uses cell type information to cluster cells into five
+  distinct spatial regions. As a case study, we will compare individuals
+  with good or poor prognosis and examine them graphically to see if any
+  regions appear to be different between good or poor prognosis. We
+  define:
 
-  The strategy we demonstrate here uses the `lisaClust` function, which
-  uses cell type information to cluster cells into five distinct spatial
-  regions. As a case study, we will compare individuals with good or
-  poor prognosis and examine them graphically to see if any regions
-  appear to be different between good or poor prognosis. We define: -
-  Good prognosis as individuals with \> 10 years recurrence-free
-  survival and - Poor prognosis as individuals with \< 5 years
-  recurrence-free survival.
+  - Good prognosis as individuals with \> 10 years recurrence-free
+    survival and
+  - Poor prognosis as individuals with \< 5 years recurrence-free
+    survival.
 
   Below we visualise the spatial domain (regions) detection result based
-  on one individual. Here we will use the terminology “spatial domain”
-  and “regions” interchangeably.
+  on one individual.
 
   Depending on the number of regions, it may be more useful to visualise
   the spatial regions either collectively in a single graph or
@@ -1173,18 +1174,17 @@ one_sample |>
 
   *Discussion*
 
-  - If we’d like to examine multiple individuals, is there a better
-    visualise this information?
+  - If we’d like to examine multiple individuals, is there a better way
+    to visualise this information?
 
     
 
-To perform spatial region detection across multiple individuals, we will
-use the `Banksy` package. The `Banksy` method identifies spatial regions
-by integrating both gene expression and spatial information. We have
-already run `Bansky` for you, so all you need to do is run the code
-below to visualise the results. You can use the code that is commented
-to run `Banksy` in case you’d like to use it as a template for the
-future.
+Another method for digital segmentation across multiple samples is the
+package `Banksy`. `Banksy` identifies spatial regions by integrating
+both gene expression and spatial information. We have already run
+`Bansky` for you, so all you need to do is run the code below to
+visualise the results. You can use the code that is commented to run
+`Banksy` in case you’d like to use it as a template for the future.
 
 Code
 
@@ -1241,12 +1241,6 @@ hatchingPlot(
 
 ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-23-1.png)
 
-We can also visualise the spatial region detection results across
-multiple individuals side by side for comparison. Below is an example of
-visualising two individuals, `MB-0002` and `MB-0064`. Notice the
-different cell type compositions in the different regions between the
-two individuals.
-
 Code
 
 ``` r
@@ -1276,11 +1270,9 @@ plot2 <- hatchingPlot(
 cowplot::plot_grid(plotlist = list(plot1, plot2), ncol = 2)
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-24-1.png)
-
-We can better interpret the region output by summarising the proportion
-of each cell-type in a region across the individuals. We look at the
-composition of cell-types in each region and then compare between
+Using the regions detected by `lisaClust`. We’re now going to
+characterise the regions by summarising the proportion of each cell-type
+in each region across the individuals and then compare between
 prognostic outcomes.
 
 Code
@@ -1426,13 +1418,8 @@ type levels, overall expression, cell type proportions etc…
 
 &nbsp;
 
-- Suppose that we are interested in determining the proportion of
-  cell-types within each region for each individual. It is necessary to
-  specify `type = spatial_p` to reflect that we have spatial proteomics
-  data and `feature_types = proportion_raw` to indicate we intend to
-  calculate cell-type proportions for each of the region-specific
-  cell-types. Suppose we are only interested in the molecular
-  representation of `HR- CK7+` within individuals within region 5.
+- Below is an example of how to generate features for each cell type
+  within each sample using `scFeatures`.
 
   Code
   ``` r
@@ -1460,6 +1447,11 @@ type levels, overall expression, cell type proportions etc…
                                   feature_types = "proportion_raw", 
                                   type = "spatial_p" )
   ```
+
+We can also use scFeatures to generate region-specific characteristics.
+Here, we look at the proportions of the cell type `HR- CK7+` across the
+5 regions. It is necessary to specify `type = spatial_p` to reflect that
+we have spatial proteomics data and `feature_types = proportion_raw`.
 
 **Question**
 
@@ -1539,7 +1531,7 @@ scfeatures_result <- readRDS(system.file("extdata",
 gene_mean_celltype <- scfeatures_result$gene_mean_celltype
 
 # Extract HR+ CK7 cell-type specific gene expression for Region5
-index <-  grep("HR+ CK7--region5", colnames(gene_mean_celltype) , fixed= T)
+index <-  grep("HR- CK7+-region5", colnames(gene_mean_celltype) , fixed= T)
 gene_mean_celltype <- gene_mean_celltype [, index] 
 
 # transpose to ensure we have gene by sample matrix
@@ -1575,7 +1567,7 @@ Code
 tT <- tT[order(tT$logFC, decreasing=TRUE), ][1:20, ]
 
 ggplot(tT, aes(y = reorder(gene, logFC), x = logFC)) +
-  geom_point(aes(colour = -log10(P.Value)), alpha = 2/3, size = 4) +
+  geom_point(aes(colour = P.Value), alpha = 2/3, size = 4) +
   scale_colour_gradient(low = "blue", high = "red") +
   theme_bw() +
   xlab("logFC") +
@@ -1583,6 +1575,26 @@ ggplot(tT, aes(y = reorder(gene, logFC), x = logFC)) +
 ```
 
 ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-32-1.png)
+
+We can see that the logFC for `panCK` is skewing the results. This makes
+it difficult to interpret the plot. We have removed `panCK` from the
+results and re plot the results below.
+
+Code
+
+``` r
+# order the proteins by log fold change 
+tT <- tT[!(tT$gene == "HR- CK7+-region5--panCK"), ]
+
+ggplot(tT, aes(y = reorder(gene, logFC), x = logFC)) +
+  geom_point(aes(colour = P.Value), alpha = 2/3, size = 4) +
+  scale_colour_gradient(low = "blue", high = "red") +
+  theme_bw() +
+  xlab("logFC") +
+  ylab("region specific cell type specific features")
+```
+
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-33-1.png)
 
 The code below enable us to generate all feature types for all
 cell-types in a line. Due to limitations with today’s computational
@@ -1707,16 +1719,15 @@ these statistics and the “good” and “bad” prognosis groups.
     labs(y="Gene", x="Nearest Neighbour Correlation")
   ```
 
-  ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-35-1.png)
+  ![](NUS_workshop_v3_files/figure-html/unnamed-chunk-36-1.png)
 
-The L function is a spatial statistic used to assess the spatial
-distribution of cell-types. It assesses the significance of cell-cell
-interactions, by calculating the density of a cell-type with other
-cell-types within a certain radius. High values indicate spatial
-association (co-localisation), low values indicate spatial avoidance. To
-demonstrate the L-function, we will plot a specific patient “MB-0128”
-who has a high L value for B cells interacting with Fibroblasts and a
-low L value for B cells interacting with HR- CK7- cells.
+The L function is a spatial statistic used to assess the co-localisation
+of cell-types. High values indicate spatial association
+(co-localisation) while low values indicate spatial avoidance. To
+demonstrate what the L-function tries to capture, we will plot a
+specific patient “MB-0128” who has a high L value for B cells
+interacting with Fibroblasts and a low L value for Fibroblasts
+interacting with HR- CK7- cells.
 
 Code
 
@@ -1764,7 +1775,7 @@ b <- ggplot(one_sample, aes(x = Location_Center_X, y = Location_Center_Y, colour
 ggarrange(plotlist = list(a, b))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-36-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-37-1.png)
 
 Moran’s I is a spatial autocorrelation statistic based on both location
 and values. It quantifies whether similar values tend to occur near each
@@ -1795,7 +1806,7 @@ df |>
   labs(y="Gene", x="Moran's I")
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-37-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-38-1.png)
 
 ## Part 5: Disease classification with ClassifyR \[Presentation\]
 
@@ -1897,7 +1908,7 @@ performancePlot(multiresults,
                 theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-41-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-42-1.png)
 
 Note how the resultant plot is a `ggplot2` object and can be further
 modified. The same code could be used for a categorical classifier
@@ -1914,7 +1925,7 @@ selectionPlot(multiresults,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-42-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-43-1.png)
 
 Code
 
@@ -1935,12 +1946,12 @@ Code
 samplesMetricMap(classifyr_result_IMC)
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-43-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-44-1.png)
 
     TableGrob (2 x 1) "arrange": 2 grobs
       z     cells    name                 grob
     1 1 (2-2,1-1) arrange       gtable[layout]
-    2 2 (1-1,1-1) arrange text[GRID.text.8830]
+    2 2 (1-1,1-1) arrange text[GRID.text.8167]
 
 ## Appendix
 
@@ -1988,7 +1999,7 @@ b <- ggplot( one_sample, aes(x = Location_Center_X , y = Location_Center_Y, colo
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-44-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-45-1.png)
 
 - Cell type interaction composition:
 
@@ -2021,7 +2032,7 @@ b <- ggplot(to_plot, aes(x =  `celltype interaction composition`  ,  y = value, 
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-45-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-46-1.png)
 
 - Moran’s I:
 
@@ -2048,7 +2059,7 @@ b <- ggplot(low_meta, aes(x = Location_Center_X , y = Location_Center_Y, colour 
 ggarrange(plotlist = list(a,b))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-46-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-47-1.png)
 
 - Nearest Neighbor Correlation:
 
@@ -2104,7 +2115,7 @@ p2 <- plot_nncorrelation("MB-0258",  "HER2")
 ggarrange(plotlist = list(p1, p2))
 ```
 
-![](NUS_workshop_v3_files/figure-html/unnamed-chunk-47-1.png)
+![](NUS_workshop_v3_files/figure-html/unnamed-chunk-48-1.png)
 
 ### SessionInfo
 
@@ -2154,8 +2165,8 @@ sessionInfo()
     [31] naniar_1.1.0                    reshape_0.8.10
     [33] spatstat_3.4-1                  spatstat.linnet_3.3-2
     [35] spatstat.model_3.4-2            rpart_4.1.24
-    [37] spatstat.explore_3.5-3          nlme_3.1-168
-    [39] spatstat.random_3.4-2           spatstat.geom_3.6-1
+    [37] spatstat.explore_3.6-0          nlme_3.1-168
+    [39] spatstat.random_3.4-3           spatstat.geom_3.6-1
     [41] spatstat.univar_3.1-5           spatstat.data_3.1-9
     [43] survminer_0.5.1                 ggpubr_0.6.2
     [45] survival_3.8-3                  tidyr_1.3.1
