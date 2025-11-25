@@ -136,6 +136,7 @@ system.file(“extdata”, “MB0002_1_345_fullstack.tiff”, package =
 
   # Assign channel names to the multi-channel image
   channelNames(images) <- labels
+
   marker = plotPixels(
     image = images,
     colour_by = "Total HH3"
@@ -1047,7 +1048,7 @@ indicate incomplete or inaccurate cell-type annotations.
 Code
 
 ``` r
-plotUMAP(data_sce, colour_by = "description")
+plotUMAP(data_sce, colour_by = "high_level_category")
 ```
 
 ![](workshop_files/figure-html/unnamed-chunk-19-1.png)
@@ -1951,7 +1952,7 @@ samplesMetricMap(classifyr_result_IMC)
     TableGrob (2 x 1) "arrange": 2 grobs
       z     cells    name                 grob
     1 1 (2-2,1-1) arrange       gtable[layout]
-    2 2 (1-1,1-1) arrange text[GRID.text.8167]
+    2 2 (1-1,1-1) arrange text[GRID.text.8117]
 
 ## Appendix
 
